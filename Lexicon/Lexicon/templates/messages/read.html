@@ -1,0 +1,26 @@
+﻿<h1>{{Title}}</h1>
+
+<div class="form-horizontal">
+    <table class="table">
+        <tr>
+            <th>Subject</th>
+            <th>Sent</th>
+            <th ng-show="Message.From">From</th>
+            <th ng-show="Message.To">To</th>
+            <th>Content</th>
+            <th ng-show="Message.To">Read</th>
+        </tr>
+        <tr>
+            <td>{{Message.Subject}}</td>
+            <td>{{Message.SendingDate}}</td>
+            <td ng-show="Message.From">{{Message.From}}</td>
+            <td ng-show="Message.To">{{Message.To}}</td>
+            <td id="content"></td>
+            <td ng-show="Message.To">{{Message.ReadingDate}}</td>
+        </tr>
+    </table>
+</div>
+
+<hr />
+<a href="#!/Messages/Reply/{{Message.ID}}">Reply to</a> |
+<a href="#!/Messages">Back to List</a>

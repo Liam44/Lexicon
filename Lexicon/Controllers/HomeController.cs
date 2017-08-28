@@ -8,9 +8,16 @@ namespace Lexicon.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Login()
         {
-            ViewBag.Title = "Home Page";
+            ViewBag.Title = "Log in";
+
+            return View();
+        }
+
+        public ActionResult Logout()
+        {
+            ViewBag.Title = "Log out";
 
             return View();
         }

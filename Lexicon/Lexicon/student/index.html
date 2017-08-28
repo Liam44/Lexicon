@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Lexicon Helper System</title>
+
+    <link rel="stylesheet" href="/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="/Content/Site.css" />
+    <link rel="import" href="/Lexicon/bundle-angular.html" />
+    <link rel="import" href="bundle-factories.html" />
+    <link rel="import" href="bundle-student.html" />
+
+
+    <!--<script src="/Scripts/angular.js"></script>
+    <script src="/Scripts/angular-route.min.js"></script>
+    <script src="/Scripts/Lexicon/modules/modules.js"></script>-->
+
+
+    <script src="/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/Lexicon/routing/Student.js"></script>
+
+
+    <!--<script src="/Scripts/Lexicon/directives/bsActiveLink.js"></script>
+    <script src="/Scripts/Lexicon/controllers/student/ErrorController.js"></script>
+    <script src="/Scripts/Lexicon/controllers/student/Controller.js"></script>
+    <script src="/Scripts/Lexicon/controllers/student/ChangePassword.js"></script>
+    <script src="/Scripts/Lexicon/controllers/student/messages/Controller.js"></script>
+    <script src="/Scripts/Lexicon/controllers/student/messages/CreateController.js"></script>
+    <script src="/Scripts/Lexicon/controllers/student/messages/DetailsController.js"></script>
+    <script src="/Scripts/Lexicon/controllers/student/messages/HistoryController.js"></script>
+    <script src="/Scripts/Lexicon/controllers/student/news/Controller.js"></script>
+    <script src="/Scripts/Lexicon/controllers/student/news/CreateController.js"></script>
+    <script src="/Scripts/Lexicon/controllers/student/news/DetailsController.js"></script>
+    <script src="/Scripts/Lexicon/controllers/student/news/EditController.js"></script>
+    <script src="/Scripts/Lexicon/factories/CurrentUser.js"></script>
+    <script src="/Scripts/Lexicon/factories/Messages.js"></script>
+    <script src="/Scripts/Lexicon/factories/News.js"></script>
+    <script src="/Scripts/Lexicon/factories/Password.js"></script>
+    <script src="/Scripts/Lexicon/factories/Redirect.js"></script>
+    <script src="/Scripts/Lexicon/factories/Token.js"></script>
+    <script src="/Scripts/Lexicon/factories/Users.js"></script>-->
+</head>
+<body ng-app="student" ng-controller="Controller" ng-init="GetCurrentUser()">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/" title="SPA - TechFunda" class="navbar-brand">SPA - TechFunda</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav" bs-active-link>
+                    <li class="active"><a href="#!/">Home</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle"
+                           data-toggle="dropdown"
+                           role="button"
+                           aria-haspopup="true"
+                           aria-expanded="false">Courses management<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#!/Templates">Templates</a></li>
+                            <li><a href="#!/Courses">Courses</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle"
+                           data-toggle="dropdown"
+                           role="button"
+                           aria-haspopup="true"
+                           aria-expanded="false">Attendance management<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#!/AddAttendance">Add a new attendance</a></li>
+                            <li><a href="#!/ExportAttendances">Export an attendance</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#!/Messages">Messages{{AmountUnreadMessages}}</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#!/ChangePassword">Hello {{User.FirstName}}!</a>
+                    </li>
+                    <li>
+                        <a href="../Logout">Log out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content" style="margin-left:50px;margin-right:50px;width:100%">
+        <div id="divLoading" ng-show="loading" style="font-size:50px;">
+            <h1>{{Title}}</h1>
+            <div class="loading">
+                Loading .....
+            </div>
+        </div>
+        <div ng-view></div>
+        <hr />
+        <footer>
+            <p>&copy; Developed by G. BARTSCH for Lexicon/Student Consulting.</p>
+        </footer>
+    </div>
+</body>
+</html>

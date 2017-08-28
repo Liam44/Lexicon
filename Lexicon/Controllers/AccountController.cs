@@ -13,12 +13,14 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using Lexicon.Helpers;
 using Lexicon.Models;
+using Lexicon.Models.Lexicon;
 using Lexicon.Providers;
 using Lexicon.Results;
+using Lexicon.ViewModels;
 using Lexicon.Repositories;
-using Lexicon.Models.Lexicon;
+using System.Net;
+using System.Web.Http.Description;
 
 namespace Lexicon.Controllers
 {
@@ -28,11 +30,6 @@ namespace Lexicon.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
-
-        public User FindById(string id)
-        {
-            return _userManager.FindById(id);
-        }
 
         public AccountController()
         {
@@ -123,7 +120,6 @@ namespace Lexicon.Controllers
         }
 
         // POST api/Account/ChangePassword
-        [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -131,8 +127,9 @@ namespace Lexicon.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
-                model.NewPassword);
+            IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(),
+                                                                          model.OldPassword,
+                                                                          model.NewPassword);
 
             if (!result.Succeeded)
             {
@@ -152,6 +149,26 @@ namespace Lexicon.Controllers
             }
 
             IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            return Ok();
+        }
+
+        // POST api/Account/ResetPassword
+        public async Task<IHttpActionResult> ResetPassword(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            UsersRepository repository = new UsersRepository();
+
+            IdentityResult result = await repository.ChangePassword(id);
 
             if (!result.Succeeded)
             {
@@ -327,34 +344,100 @@ namespace Lexicon.Controllers
         }
 
         // POST api/Account/Register
-        [AllowAnonymous]
-        [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        [Authorize(Roles = "Admin,Teacher")]
+        public async Task<IHttpActionResult> Register(PartialUserVM model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var user = new User()
+            User user = new User()
             {
-                UserName = model.UserName,
+                UserName = model.Username,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                AFId = model.AFID,
                 Email = model.Email,
-                Role = model.RoleName.GetValueFromDescription<ERoles>()
+                PhoneNumber = model.PhoneNumber,
+                AFId = model.AFId,
+                Role = model.Role
             };
 
-            IdentityResult result = await UserManager.CreateAsync(user, new RolesRepository().DefaultPassword(model.RoleName));
-            UserManager.AddToRole(user.Id, model.RoleName);
+            // When a teacher attempts to create a Student account, the role is set by default to 0 (Undefined)
+            if (model.Role == ERole.Undefined)
+                user.Role = ERole.Student;
+
+            IdentityResult result = await UserManager.CreateAsync(user, RoleConstants.Password(user.Role));
 
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
 
-            return Ok();
+            result = await UserManager.AddToRoleAsync(user.Id, user.Role.ToString());
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            return CreatedAtRoute("DefaultApi", new { id = user.Id }, user);
+        }
+
+        [Authorize(Roles = "Admin,Teacher")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PutUser(string id, PartialUserVM user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != user.Id)
+            {
+                return BadRequest();
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Checks that the UserName is still unique
+                UsersRepository repository = new UsersRepository();
+
+                User originalUser = await repository.GetUserByUsername(user.Username);
+
+                if (originalUser.Id != id)
+                {
+                    return BadRequest("A user with the same username already exists!");
+                }
+
+                originalUser = await repository.GetUserById(user.Id);
+
+                // The unedited fields of the 'user' variable are set to default values
+                // Therefore it's needed to replace the initial values of the only editable fields with the
+                // new values
+                originalUser.Email = user.Email;
+                originalUser.PhoneNumber = user.PhoneNumber;
+                originalUser.UserName = user.Username;
+                originalUser.FirstName = user.FirstName;
+                originalUser.LastName = user.LastName;
+                originalUser.AFId = user.AFId;
+
+                if (originalUser.Role != user.Role)
+                {
+                    UserManager.RemoveFromRole(id, originalUser.Role.ToString());
+
+                    UserManager.AddToRole(id, user.Role.ToString());
+                }
+
+                originalUser.Role = user.Role;
+
+                if (await repository.Edit(id, originalUser))
+                    return StatusCode(HttpStatusCode.NoContent);
+                else
+                    return NotFound();
+            }
+
+            return BadRequest(ModelState);
         }
 
         // POST api/Account/RegisterExternal

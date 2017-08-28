@@ -7,7 +7,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{629A81D2-ADDE-47D1-8B12-C426B4626D9C}</ProjectGuid>
+    <ProjectGuid>{8223142C-0744-457C-B236-FAADAAB25048}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -20,6 +20,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -78,10 +80,6 @@
     </Reference>
     <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.1.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -204,44 +202,65 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\RolesAPIController.cs" />
+    <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Authenticated.cs" />
-    <Compile Include="Helpers\EnumHelper.cs" />
-    <Compile Include="Migrations\201708160617436_Initial.cs" />
-    <Compile Include="Migrations\201708160617436_Initial.Designer.cs">
-      <DependentUpon>201708160617436_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201708280728323_Initial.cs" />
+    <Compile Include="Migrations\201708280728323_Initial.Designer.cs">
+      <DependentUpon>201708280728323_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708160651259_Initial1.cs" />
-    <Compile Include="Migrations\201708160651259_Initial1.Designer.cs">
-      <DependentUpon>201708160651259_Initial1.cs</DependentUpon>
+    <Compile Include="Migrations\201708280814482_Messages.cs" />
+    <Compile Include="Migrations\201708280814482_Messages.Designer.cs">
+      <DependentUpon>201708280814482_Messages.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Lexicon\Role.cs" />
-    <Compile Include="Models\Lexicon\TeachersAssignment.cs" />
-    <Compile Include="Models\Lexicon\StudentsAssignment.cs" />
     <Compile Include="Models\Lexicon\Attendance.cs" />
     <Compile Include="Models\Lexicon\Course.cs" />
     <Compile Include="Models\Lexicon\CourseDay.cs" />
     <Compile Include="Models\Lexicon\CoursePart.cs" />
     <Compile Include="Models\Lexicon\CourseTemplate.cs" />
     <Compile Include="Models\Lexicon\Document.cs" />
+    <Compile Include="Models\Lexicon\Feedback.cs" />
+    <Compile Include="Models\Lexicon\Internship.cs" />
     <Compile Include="Models\Lexicon\Link.cs" />
     <Compile Include="Models\Lexicon\Message.cs" />
     <Compile Include="Models\Lexicon\News.cs" />
+    <Compile Include="Models\Lexicon\Post.cs" />
+    <Compile Include="Models\Lexicon\Role.cs" />
+    <Compile Include="Models\Lexicon\StudentsAssignment.cs" />
+    <Compile Include="Models\Lexicon\TeachersAssignment.cs" />
+    <Compile Include="Models\Lexicon\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Repositories\AttendancesRepository.cs" />
+    <Compile Include="Repositories\CourseDaysRepository.cs" />
+    <Compile Include="Repositories\CoursePartsRepository.cs" />
+    <Compile Include="Repositories\CoursesRepository.cs" />
+    <Compile Include="Repositories\CourseTemplate.cs" />
+    <Compile Include="Repositories\DocumentsRepository.cs" />
+    <Compile Include="Repositories\FeedbacksRepository.cs" />
+    <Compile Include="Repositories\InternshipsRepository.cs" />
+    <Compile Include="Repositories\LinksRepository.cs" />
+    <Compile Include="Repositories\MessagesRepository.cs" />
+    <Compile Include="Repositories\NewsRepository.cs" />
     <Compile Include="Repositories\RolesRepository.cs" />
+    <Compile Include="Repositories\StudentsAssignmentsRepository.cs" />
+    <Compile Include="Repositories\TeachersAssignmentsRepository.cs" />
+    <Compile Include="Repositories\UsersRepository.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\EnumRolesVM.cs" />
+    <Compile Include="ViewModels\PartialMessageVM.cs" />
+    <Compile Include="ViewModels\PartialUserVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -279,13 +298,40 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Lexicon\admin\bundle-admin.html" />
+    <Content Include="Lexicon\admin\bundle-factories.html" />
+    <Content Include="Lexicon\bundle-angular.html" />
+    <Content Include="Lexicon\changepassword.html" />
+    <Content Include="Lexicon\logout\logout.html" />
+    <Content Include="Lexicon\student\bundle-student.html" />
+    <Content Include="Lexicon\student\bundle-factories.html" />
+    <Content Include="Lexicon\teacher\bundle-factories.html" />
+    <Content Include="Lexicon\teacher\bundle-teacher.html" />
+    <Content Include="Lexicon\templates\messages\history.html" />
+    <Content Include="Lexicon\templates\messages\read.html" />
+    <Content Include="Lexicon\templates\messages\reply.html" />
+    <Content Include="Lexicon\templates\users\register.html" />
+    <Content Include="Scripts\angular-route.js" />
+    <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Scripts\angular-route.min.js.map" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Lexicon\admin\home.html" />
+    <Content Include="Lexicon\admin\index.html" />
+    <Content Include="Lexicon\admin\redirectError.html" />
+    <Content Include="Lexicon\student\home.html" />
+    <Content Include="Lexicon\student\index.html" />
+    <Content Include="Lexicon\student\redirectError.html" />
+    <Content Include="Lexicon\teacher\home.html" />
+    <Content Include="Lexicon\teacher\index.html" />
+    <Content Include="Lexicon\teacher\redirectError.html" />
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-ngModules.js" />
+    <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
-    <Content Include="Scripts\angular.min.js.map" />
-    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
-    <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
@@ -297,13 +343,124 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\Lexicon\Auth.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\ChangePassword.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\messages\Controller.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\messages\HistoryController.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\messages\ReplyController.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\messages\CreateController.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\messages\DetailsController.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\news\Controller.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\news\DetailsController.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\news\EditController.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\news\CreateController.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\users\Controller.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\users\RegisterController.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\users\DetailsController.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\users\EditController.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\ErrorController.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\Controller.js" />
+    <Content Include="Scripts\Lexicon\controllers\login.js" />
+    <Content Include="Scripts\Lexicon\controllers\logout\Controller.js" />
+    <Content Include="Scripts\Lexicon\controllers\logout\ErrorController.js" />
+    <Content Include="Scripts\Lexicon\controllers\student\ChangePassword.js" />
+    <Content Include="Scripts\Lexicon\controllers\student\Controller.js" />
+    <Content Include="Scripts\Lexicon\controllers\student\ErrorController.js" />
+    <Content Include="Scripts\Lexicon\controllers\student\messages\Controller.js" />
+    <Content Include="Scripts\Lexicon\controllers\student\messages\CreateController.js" />
+    <Content Include="Scripts\Lexicon\controllers\student\messages\DetailsController.js" />
+    <Content Include="Scripts\Lexicon\controllers\student\messages\HistoryController.js" />
+    <Content Include="Scripts\Lexicon\controllers\student\messages\ReplyController.js" />
+    <Content Include="Scripts\Lexicon\controllers\student\news\Controller.js" />
+    <Content Include="Scripts\Lexicon\controllers\student\news\CreateController.js" />
+    <Content Include="Scripts\Lexicon\controllers\student\news\DetailsController.js" />
+    <Content Include="Scripts\Lexicon\controllers\student\news\EditController.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\Controller.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\ErrorController.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\messages\Controller.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\messages\CreateController.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\messages\DetailsController.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\messages\HistoryController.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\messages\ReplyController.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\news\Controller.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\news\CreateController.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\news\DetailsController.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\news\EditController.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\ChangePassword.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\students\Controller.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\students\DetailsController.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\students\EditController.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\students\RegisterController.js" />
+    <Content Include="Scripts\Lexicon\directives\bsActiveLink.js" />
+    <Content Include="Scripts\Lexicon\factories\CurrentUser.js" />
+    <Content Include="Scripts\Lexicon\factories\Logout.js" />
+    <Content Include="Scripts\Lexicon\factories\Password.js" />
+    <Content Include="Scripts\Lexicon\factories\News.js" />
+    <Content Include="Scripts\Lexicon\factories\Redirect.js" />
+    <Content Include="Scripts\Lexicon\factories\Roles.js" />
+    <Content Include="Scripts\Lexicon\factories\Messages.js" />
+    <Content Include="Scripts\Lexicon\factories\Users.js" />
+    <Content Include="Scripts\Lexicon\modules\modules.js" />
+    <Content Include="Scripts\Lexicon\routing\Logout.js" />
+    <Content Include="Scripts\Lexicon\routing\Student.js" />
+    <Content Include="Scripts\Lexicon\routing\Teacher.js" />
+    <Content Include="Scripts\Lexicon\routing\Admin.js" />
+    <Content Include="Scripts\Lexicon\factories\Token.js" />
+    <Content Include="Lexicon\templates\attendances\details.html" />
+    <Content Include="Lexicon\templates\attendances\edit.html" />
+    <Content Include="Lexicon\templates\attendances\export.html" />
+    <Content Include="Lexicon\templates\attendances\index.html" />
+    <Content Include="Lexicon\templates\attendances\report.html" />
+    <Content Include="Lexicon\templates\coursedays\details.html" />
+    <Content Include="Lexicon\templates\coursedays\index.html" />
+    <Content Include="Lexicon\templates\courses\add.html" />
+    <Content Include="Lexicon\templates\courses\delete.html" />
+    <Content Include="Lexicon\templates\courses\details.html" />
+    <Content Include="Lexicon\templates\courses\edit.html" />
+    <Content Include="Lexicon\templates\courses\index.html" />
+    <Content Include="Lexicon\templates\coursetemplates\add.html" />
+    <Content Include="Lexicon\templates\coursetemplates\delete.html" />
+    <Content Include="Lexicon\templates\coursetemplates\details.html" />
+    <Content Include="Lexicon\templates\coursetemplates\edit.html" />
+    <Content Include="Lexicon\templates\coursetemplates\index.html" />
+    <Content Include="Lexicon\templates\documents\index.html" />
+    <Content Include="Lexicon\templates\documents\upload.html" />
+    <Content Include="Lexicon\templates\feedbacks\create.html" />
+    <Content Include="Lexicon\templates\feedbacks\details.html" />
+    <Content Include="Lexicon\templates\feedbacks\edit.html" />
+    <Content Include="Lexicon\templates\internships\details.html" />
+    <Content Include="Lexicon\templates\internships\edit.html" />
+    <Content Include="Lexicon\templates\internships\index.html" />
+    <Content Include="Lexicon\logout\index.html" />
+    <Content Include="Lexicon\templates\messages\index.html" />
+    <Content Include="Lexicon\templates\messages\write.html" />
+    <Content Include="Lexicon\templates\news\create.html" />
+    <Content Include="Lexicon\templates\news\delete.html" />
+    <Content Include="Lexicon\templates\news\details.html" />
+    <Content Include="Lexicon\templates\news\edit.html" />
+    <Content Include="Lexicon\templates\news\index.html" />
+    <Content Include="Lexicon\templates\studentsassignments\add.html" />
+    <Content Include="Lexicon\templates\studentsassignments\delete.html" />
+    <Content Include="Lexicon\templates\studentsassignments\details.html" />
+    <Content Include="Lexicon\templates\studentsassignments\edit.html" />
+    <Content Include="Lexicon\templates\studentsassignments\index.html" />
+    <Content Include="Lexicon\templates\teachersassignments\add.html" />
+    <Content Include="Lexicon\templates\teachersassignments\delete.html" />
+    <Content Include="Lexicon\templates\teachersassignments\details.html" />
+    <Content Include="Lexicon\templates\teachersassignments\edit.html" />
+    <Content Include="Lexicon\templates\teachersassignments\index.html" />
+    <Content Include="Lexicon\templates\users\delete.html" />
+    <Content Include="Lexicon\templates\users\details.html" />
+    <Content Include="Lexicon\templates\users\edit.html" />
+    <Content Include="Lexicon\templates\users\index.html" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -313,28 +470,29 @@
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Login\Index.cshtml" />
-    <Content Include="Views\Login\Register.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708160617436_Initial.resx">
-      <DependentUpon>201708160617436_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708280728323_Initial.resx">
+      <DependentUpon>201708280728323_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708160651259_Initial1.resx">
-      <DependentUpon>201708160651259_Initial1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708280814482_Messages.resx">
+      <DependentUpon>201708280814482_Messages.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -353,9 +511,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>61082</DevelopmentServerPort>
+          <DevelopmentServerPort>64453</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61082/</IISUrl>
+          <IISUrl>http://localhost:57220/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

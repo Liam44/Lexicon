@@ -1,0 +1,70 @@
+﻿<h1>{{Title}}</h1>
+
+<form ng-submit="Update()">
+    <div class="form-horizontal">
+        <hr />
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Username</label>
+            <div class="col-md-10">
+                <input type="tel" name="Username" required class="form-control" ng-model="username" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">First Name</label>
+            <div class="col-md-10">
+                <input type="text" name="FirstName" required class="form-control" ng-model="firstName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Last Name</label>
+            <div class="col-md-10">
+                <input type="text" name="LastName" required class="form-control" ng-model="lastName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">AF ID</label>
+            <div class="col-md-10">
+                <input type="text" name="AFId" required class="form-control" ng-model="afid" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Email Address</label>
+            <div class="col-md-10">
+                <input type="email" name="Email" required class="form-control" ng-model="email" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Phone Number</label>
+            <div class="col-md-10">
+                <input type="tel" name="PhoneNumber" required class="form-control" ng-model="phoneNumber" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Role</label>
+            <div class="col-md-10">
+                <select class="form-control"
+                        name="roles"
+                        ng-options="role.Key as role.Value for role in Roles"
+                        ng-model="role"
+                        ng-disabled="roledisabled"
+                        required></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update" class="btn btn-default" /> 
+                <span class="text-success">{{UpdateMessage}}</span>
+            </div>
+        </div>
+    </div>
+</form>
+<hr />
+<div><a href="{{LinkHref}}">Back to List</a></div>

@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Lexicon Helper System</title>
+
+    <link rel="stylesheet" href="/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="/Content/Site.css" />
+    <script src="/Scripts/angular.js"></script>
+    <script src="/Scripts/angular-route.min.js"></script>
+    <script src="/Scripts/Lexicon/modules/modules.js"></script>
+
+
+    <script src="/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/Lexicon/routing/Logout.js"></script>
+
+    <script src="/Scripts/Lexicon/controllers/logout/Controller.js"></script>
+    <script src="/Scripts/Lexicon/controllers/logout/ErrorController.js"></script>
+    <script src="/Scripts/Lexicon/factories/Logout.js"></script>
+    <script src="/Scripts/Lexicon/factories/Redirect.js"></script>
+    <script src="/Scripts/Lexicon/factories/Token.js"></script>
+</head>
+<body ng-app="logout" ng-controller="LogoutController" ng-init="LogOut()">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+    </div>
+
+    <div class="container body-content" style="margin-left:50px;margin-right:50px;width:100%">
+        <div id="divLoading" ng-show="loading" style="font-size:50px;">
+            <h1>{{Title}}</h1>
+            <div class="loading">
+                Loading .....
+            </div>
+        </div>
+        <div ng-view></div>
+        <hr />
+        <footer>
+            <p>&copy; Developed by G. BARTSCH for Lexicon/Student Consulting.</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -6,8 +6,9 @@ using System.Web;
 
 namespace Lexicon.Models.Lexicon
 {
-    public enum ERoles
+    public enum ERole
     {
+        Undefined,
         Student,
         Teacher,
         Admin
@@ -17,32 +18,32 @@ namespace Lexicon.Models.Lexicon
     {
         public static string Student
         {
-            get { return ERoles.Student.ToString(); }
+            get { return ERole.Student.ToString(); }
             private set { }
         }
 
         public static string Teacher
         {
-            get { return ERoles.Teacher.ToString(); }
+            get { return ERole.Teacher.ToString(); }
             private set { }
         }
 
         public static string Admin
         {
-            get { return ERoles.Admin.ToString(); }
+            get { return ERole.Admin.ToString(); }
             private set { }
         }
 
-        public static string Password(ERoles role)
+        public static string Password(ERole role)
         {
             switch (role)
             {
-                case ERoles.Student:
-                    return "Studentpassword1!";
-                case ERoles.Teacher:
-                    return "Teacherpassword1!";
-                case ERoles.Admin:
-                    return "Adminpassword1!";
+                case ERole.Student:
+                    return "Student-password1";
+                case ERole.Teacher:
+                    return "Teacher-password1";
+                case ERole.Admin:
+                    return "Admin-password1";
                 default:
                     return string.Empty;
             }

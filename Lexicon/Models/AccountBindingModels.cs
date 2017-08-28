@@ -32,16 +32,6 @@ namespace Lexicon.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class RegisterBindingModel
-    {
-        public string Email { get; set; }
-        public string UserName { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string AFID { get; set; }
-        public string RoleName { get; set; }
-    }
-
     public class RegisterExternalBindingModel
     {
         [Required]
