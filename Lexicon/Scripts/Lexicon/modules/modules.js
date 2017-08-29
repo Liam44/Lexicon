@@ -28,10 +28,22 @@ angular.module('news', ['token']);
 angular.module('roles', []);
 
 // Manages all actions allowed on user accounts
-angular.module('users', ['roles']);
+angular.module('users', ['token']);
 
 // Manages all actions allowed on messages
-angular.module('messages', ['token', 'users', 'currentuser']);
+angular.module('messages', ['token']);
+
+// Manages all actions allowed on course templates
+angular.module('templates', ['token']);
+
+// Manages all actions allowed on courses
+angular.module('courses', ['token', 'coursetemplates']);
+
+// Manages all actions allowed on course days
+angular.module('coursedays', ['token']);
+
+// Manages all actions allowed on course parts
+angular.module('courseparts', ['token']);
 
 // Manages all actions allowed to the admin role
 angular.module('admin', ['bsActiveLink',
@@ -43,6 +55,8 @@ angular.module('admin', ['bsActiveLink',
     'password',
     'messages',
     'news',
+    'templates',
+    'coursedays',
     'ngRoute']);
 
 // Manages all actions allowed to the student role

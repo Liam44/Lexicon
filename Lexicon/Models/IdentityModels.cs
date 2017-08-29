@@ -29,7 +29,7 @@ namespace Lexicon.Models
         public DbSet<Link> Links { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<News> News { get; set; }
-        public DbSet<StudentsAssignment> StudentsAssignements { get; set; }
-        public DbSet<TeachersAssignment> TeachersAssignements { get; set; }
+        public DbSet<StudentsAssignment> StudentsAssignments { get; set; }
+        public DbSet<TeachersAssignment> TeachersAssignments { get; set; }
     }
 }

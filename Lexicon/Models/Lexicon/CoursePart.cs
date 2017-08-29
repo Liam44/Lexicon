@@ -4,10 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Lexicon.Models.Lexicon
 {
+    public enum CoursePartDay
+    {
+        Morning,
+        Afternoon
+    }
+
     public class CoursePart
     {
         [Key]
         public int ID { get; set; }
+
+        public CoursePartDay PartDay { get; set; }
 
         public string CodeAlong_Lecture { get; set; }
 

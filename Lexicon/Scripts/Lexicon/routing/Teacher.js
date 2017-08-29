@@ -34,11 +34,6 @@ angular.module('teacher')
                 templateUrl: '../templates/Templates/edit.html',
                 controller: 'TemplatesEditController'
             })
-            .when('/Templates/Delete/:id',
-            {
-                templateUrl: '../templates/Templates/delete.html',
-                controller: 'TemplatesDetailsController'
-            })
             .when('/Courses',
             {
                 templateUrl: '../templates/Courses/index.html',
@@ -114,11 +109,6 @@ angular.module('teacher')
                 templateUrl: '../templates/News/edit.html',
                 controller: 'NewsEditController'
             })
-            .when('/News/Delete/:id',
-            {
-                templateUrl: '../templates/News/delete.html',
-                controller: 'NewsDetailsController'
-            })
             .when('/Students',
             {
                 templateUrl: '../templates/Users/index.html',
@@ -138,11 +128,6 @@ angular.module('teacher')
             {
                 templateUrl: '../templates/Users/edit.html',
                 controller: 'StudentsEditController'
-            })
-            .when('/Students/Delete/:id',
-            {
-                templateUrl: '../templates/Users/delete.html',
-                controller: 'StudentsDetailsController'
             })
             .otherwise({
                 templateUrl: 'redirectError.html',

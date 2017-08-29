@@ -202,12 +202,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CourseTemplatesController.cs" />
+    <Compile Include="Controllers\CourseDaysController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\CoursePartsController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -218,6 +220,10 @@
     <Compile Include="Migrations\201708280814482_Messages.cs" />
     <Compile Include="Migrations\201708280814482_Messages.Designer.cs">
       <DependentUpon>201708280814482_Messages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708290911233_CoursePart.cs" />
+    <Compile Include="Migrations\201708290911233_CoursePart.Designer.cs">
+      <DependentUpon>201708290911233_CoursePart.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -245,7 +251,7 @@
     <Compile Include="Repositories\CourseDaysRepository.cs" />
     <Compile Include="Repositories\CoursePartsRepository.cs" />
     <Compile Include="Repositories\CoursesRepository.cs" />
-    <Compile Include="Repositories\CourseTemplate.cs" />
+    <Compile Include="Repositories\CourseTemplatesRepository.cs" />
     <Compile Include="Repositories\DocumentsRepository.cs" />
     <Compile Include="Repositories\FeedbacksRepository.cs" />
     <Compile Include="Repositories\InternshipsRepository.cs" />
@@ -258,6 +264,9 @@
     <Compile Include="Repositories\UsersRepository.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\PartialCoursePartVM.cs" />
+    <Compile Include="ViewModels\PartialCourseDayVM.cs" />
+    <Compile Include="ViewModels\PartialCourseTemplateVM.cs" />
     <Compile Include="ViewModels\EnumRolesVM.cs" />
     <Compile Include="ViewModels\PartialMessageVM.cs" />
     <Compile Include="ViewModels\PartialUserVM.cs" />
@@ -344,6 +353,12 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Lexicon\controllers\admin\ChangePassword.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\coursedays\Controller.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\coursedays\DetailsController.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\templates\Controller.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\templates\CreateController.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\templates\DetailsController.js" />
+    <Content Include="Scripts\Lexicon\controllers\admin\templates\EditController.js" />
     <Content Include="Scripts\Lexicon\controllers\admin\messages\Controller.js" />
     <Content Include="Scripts\Lexicon\controllers\admin\messages\HistoryController.js" />
     <Content Include="Scripts\Lexicon\controllers\admin\messages\ReplyController.js" />
@@ -391,8 +406,11 @@
     <Content Include="Scripts\Lexicon\controllers\teacher\students\EditController.js" />
     <Content Include="Scripts\Lexicon\controllers\teacher\students\RegisterController.js" />
     <Content Include="Scripts\Lexicon\directives\bsActiveLink.js" />
+    <Content Include="Scripts\Lexicon\factories\CourseDays.js" />
+    <Content Include="Scripts\Lexicon\factories\CourseTemplates.js" />
     <Content Include="Scripts\Lexicon\factories\CurrentUser.js" />
     <Content Include="Scripts\Lexicon\factories\Logout.js" />
+    <Content Include="Scripts\Lexicon\factories\CourseParts.js" />
     <Content Include="Scripts\Lexicon\factories\Password.js" />
     <Content Include="Scripts\Lexicon\factories\News.js" />
     <Content Include="Scripts\Lexicon\factories\Redirect.js" />
@@ -417,11 +435,10 @@
     <Content Include="Lexicon\templates\courses\details.html" />
     <Content Include="Lexicon\templates\courses\edit.html" />
     <Content Include="Lexicon\templates\courses\index.html" />
-    <Content Include="Lexicon\templates\coursetemplates\add.html" />
-    <Content Include="Lexicon\templates\coursetemplates\delete.html" />
-    <Content Include="Lexicon\templates\coursetemplates\details.html" />
-    <Content Include="Lexicon\templates\coursetemplates\edit.html" />
-    <Content Include="Lexicon\templates\coursetemplates\index.html" />
+    <Content Include="Lexicon\templates\templates\create.html" />
+    <Content Include="Lexicon\templates\templates\details.html" />
+    <Content Include="Lexicon\templates\templates\edit.html" />
+    <Content Include="Lexicon\templates\templates\index.html" />
     <Content Include="Lexicon\templates\documents\index.html" />
     <Content Include="Lexicon\templates\documents\upload.html" />
     <Content Include="Lexicon\templates\feedbacks\create.html" />
@@ -434,7 +451,6 @@
     <Content Include="Lexicon\templates\messages\index.html" />
     <Content Include="Lexicon\templates\messages\write.html" />
     <Content Include="Lexicon\templates\news\create.html" />
-    <Content Include="Lexicon\templates\news\delete.html" />
     <Content Include="Lexicon\templates\news\details.html" />
     <Content Include="Lexicon\templates\news\edit.html" />
     <Content Include="Lexicon\templates\news\index.html" />
@@ -448,7 +464,6 @@
     <Content Include="Lexicon\templates\teachersassignments\details.html" />
     <Content Include="Lexicon\templates\teachersassignments\edit.html" />
     <Content Include="Lexicon\templates\teachersassignments\index.html" />
-    <Content Include="Lexicon\templates\users\delete.html" />
     <Content Include="Lexicon\templates\users\details.html" />
     <Content Include="Lexicon\templates\users\edit.html" />
     <Content Include="Lexicon\templates\users\index.html" />
@@ -493,6 +508,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708280814482_Messages.resx">
       <DependentUpon>201708280814482_Messages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708290911233_CoursePart.resx">
+      <DependentUpon>201708290911233_CoursePart.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

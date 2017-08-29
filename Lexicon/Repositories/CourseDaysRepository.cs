@@ -1,13 +1,163 @@
-﻿using System;
+﻿using Lexicon.Models;
+using Lexicon.Models.Lexicon;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Web;
+using System.Threading.Tasks;
 
 namespace Lexicon.Repositories
 {
-    public class CourseDaysRepository
+    public class CourseDaysRepository : IDisposable
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        /// <summary>
+        /// Gets all course days in a course
+        /// </summary>
+        /// <param name="courseId">ID of the course</param>
+        /// <returns></returns>
+        public IQueryable<CourseDay> CourseDays(int courseId)
+        {
+            return db.CourseDays.Where(cd => cd.CourseID == courseId);
+        }
+
+        /// <summary>
+        /// Gets all course days in a course template
+        /// </summary>
+        /// <param name="courseTemplateId">ID of the course template</param>
+        /// <returns></returns>
+        public IQueryable<CourseDay> CourseTemplateDays(int courseTemplateId)
+        {
+            return db.CourseDays.Where(cd => cd.CourseTemplateID == courseTemplateId);
+        }
+
+        /// <summary>
+        /// Gets a specific course day
+        /// </summary>
+        /// <param name="id">ID of the course day</param>
+        /// <returns></returns>
+        public async Task<CourseDay> CourseDay(int? id)
+        {
+            return await db.CourseDays.FirstOrDefaultAsync(cd => cd.ID == id);
+        }
+
+        public async Task Add(CourseDay courseDay)
+        {
+            db.CourseDays.Add(courseDay);
+            await db.SaveChangesAsync();
+
+            await new CoursePartsRepository().CreateCourseParts(courseDay.ID);
+        }
+
+        /// <summary>
+        /// Creates as many "empty" course days as required in the template
+        /// </summary>
+        /// <param name="templateId">ID of the template</param>
+        /// <param name="amountOfDays">Required amount of days</param>
+        /// <returns></returns>
+        public async Task CreateCourseDays(int templateId, int amountOfDays)
+        {
+
+            // Creating the days related to the template
+            for (int i = 0; i < amountOfDays; i += 1)
+            {
+                CourseDay cp = new CourseDay
+                {
+                    DayNumber = i + 1,
+                    CourseTemplateID = templateId
+                };
+                await Add(cp);
+            }
+        }
+
+        public async Task<bool> Edit(int id, CourseDay courseDay)
+        {
+            db.Entry(courseDay).State = EntityState.Modified;
+
+            try
+            {
+                await db.SaveChangesAsync();
+
+                return true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CourseDayExists(id))
+                {
+                    return false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+        public async Task Delete(CourseDay courseDay)
+        {
+            db.CourseDays.Remove(courseDay);
+            await db.SaveChangesAsync();
+        }
+
+        private bool CourseDayExists(int id)
+        {
+            return db.CourseDays.Count(cd => cd.ID == id) > 0;
+        }
+
+        /// <summary>
+        /// Clones the course day and attaches it to a course
+        /// </summary>
+        /// <param name="courseDay">Cours day to be cloned</param>
+        /// <param name="courseId">ID of the course to which the cloned course day should be attached</param>
+        /// <returns></returns>
+        public async Task<CourseDay> Clone(CourseDay courseDay, int courseId)
+        {
+            // Cloning the courseday itself
+            CourseDay clone = new CourseDay
+            {
+                CourseID = courseId,
+                DayNumber = courseDay.DayNumber
+            };
+
+            await Add(clone);
+
+            // Cloning the course parts included in the courseday
+            foreach (CoursePart coursePart in courseDay.CourseParts)
+            {
+                CoursePart cpClone = await new CoursePartsRepository().Clone(coursePart, clone.ID);
+
+                clone.CourseParts.Add(cpClone);
+            }
+
+            // Cloning the uploaded files in the courseday
+            foreach (Document document in courseDay.Files)
+            {
+                Document docClone = await new DocumentsRepository().Clone(document, courseDayId: clone.ID);
+
+                clone.Files.Add(docClone);
+            }
+
+            return clone;
+        }
+
+        #region IDisposable Support
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                db.Dispose();
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
     }
 }

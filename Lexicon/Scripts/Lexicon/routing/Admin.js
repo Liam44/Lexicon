@@ -34,11 +34,6 @@ angular.module('admin')
                 templateUrl: '../templates/Templates/edit.html',
                 controller: 'TemplatesEditController'
             })
-            .when('/Templates/Delete/:id',
-            {
-                templateUrl: '../templates/Templates/delete.html',
-                controller: 'TemplatesDetailsController'
-            })
             .when('/Courses',
             {
                 templateUrl: '../templates/Courses/index.html',
@@ -58,6 +53,16 @@ angular.module('admin')
             {
                 templateUrl: '../templates/Courses/edit.html',
                 controller: 'CoursesEditController'
+            })
+            .when('/CourseDays',
+            {
+                templateUrl: '../templates/CourseDays/index.html',
+                controller: 'CourseDaysController'
+            })
+            .when('/CourseDays/Details/:id',
+            {
+                templateUrl: '../templates/CourseDays/details.html',
+                controller: 'CourseDaysDetailsController'
             })
             .when('/AddAttendance',
             {
@@ -114,11 +119,6 @@ angular.module('admin')
                 templateUrl: '../templates/News/edit.html',
                 controller: 'NewsEditController'
             })
-            .when('/News/Delete/:id',
-            {
-                templateUrl: '../templates/News/delete.html',
-                controller: 'NewsDetailsController'
-            })
             .when('/Users',
             {
                 templateUrl: '../templates/Users/index.html',
@@ -138,11 +138,6 @@ angular.module('admin')
             {
                 templateUrl: '../templates/Users/edit.html',
                 controller: 'UsersEditController'
-            })
-            .when('/Users/Delete/:id',
-            {
-                templateUrl: '../templates/Users/delete.html',
-                controller: 'UsersDetailsController'
             })
             .otherwise({
                 templateUrl: 'redirectError.html',

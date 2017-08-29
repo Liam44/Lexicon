@@ -217,7 +217,6 @@ textarea.content-message {
     border-bottom: 0;
     margin-right: 27px;
     font-size: 18px;
-/*    width: 250px;*/
 }
 
 .message-from {
@@ -226,7 +225,6 @@ textarea.content-message {
     border-bottom: 0;
     margin-right: 27px;
     font-size: 18px;
-/*    width: 250px;*/
 }
 
 .message-subject {
@@ -252,3 +250,12 @@ textarea.content-message {
 .message-expand {
     padding-bottom: 40px;
 }
+
+.courseday-content {
+    font-size: 1.2em;
+    padding: 20px 28px 0px 28px;
+}
+
+    .courseday-content a {
+        text-align:center;
+    }
