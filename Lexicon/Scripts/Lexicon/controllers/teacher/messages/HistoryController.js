@@ -17,49 +17,7 @@ angular.module('teacher')
             });
 
             function CreateDIV(message) {
-                var div = document.createElement('div');
-                div.className = 'message message-content';
-                div.id = message.ID;
-                div.style = 'padding-left:' + (message.Level * 50) + 'px';
-
-                var dateDiv = document.createElement('div');
-                dateDiv.className = 'col-md-3 message-date';
-                dateDiv.innerHTML = message.SendingDate;
-
-                if (message.Level > 0) {
-                    dateDiv.innerHTML = '\u2937' + '\u0009' + dateDiv.innerHTML;
-                }
-
-                var fromDiv = document.createElement('div');
-                fromDiv.className = 'col-md-3 message-from';
-                fromDiv.innerHTML = message.From;
-
-                var expendDiv = document.createElement('div');
-                expendDiv.className = 'message-subject';
-                expendDiv.innerHTML = message.Subject;
-
-                var collapseDiv = document.createElement('div');
-                collapseDiv.className = 'collapse';
-
-                var separator = Array(41).join('\u2014');
-
-                var reply = '';
-                if (message.FromID) {
-                    reply = '<a href="#!/Messages/Reply/' + message.ID + '">Reply</a>';
-                }
-
-                var content = [separator, message.Content, separator, reply, '', ''];
-
-                collapseDiv.innerHTML = content.join('<br />');
-
-                div.appendChild(dateDiv);
-                div.appendChild(fromDiv);
-                div.appendChild(expendDiv);
-                div.appendChild(collapseDiv);
-
-                div.addEventListener("click", function (e) {
-                    collapseDiv.classList.toggle('collapse');
-                });
+                var div = MessagesService.CreateDiv(message, parseInt($routeParams.id));
 
                 var lastDiv = contentDiv[contentDiv.length];
                 contentDiv.insertBefore(div, lastDiv);

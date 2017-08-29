@@ -7,7 +7,7 @@ angular.module('teacher')
         function ($scope, UsersService, PasswordService, $rootScope) {
             $scope.Title = "Registered Students";
 
-            $scope.LinkHref = '#!/Students';
+            $scope.LinkHref = 'Students';
             $scope.LinkTitle = 'Register a new student';
             $scope.LinkText = 'Register a new student';
 

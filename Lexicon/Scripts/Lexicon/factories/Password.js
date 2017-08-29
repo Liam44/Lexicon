@@ -24,14 +24,32 @@ angular.module('password')
                },
                function (response) {
                    if (response.data.ModelState['model.NewPassword']) {
-                       return response.data.ModelState['model.NewPassword'][0];
+                       var result = '';
+
+                       response.data.ModelState['model.NewPassword'].forEach(function (item) {
+                           result += item + ' ';
+                       })
+
+                       return result;
                    }
 
                    if (response.data.ModelState['model.ConfirmPassword']) {
-                       return response.data.ModelState['model.ConfirmPassword'][0];
+                       var result = '';
+
+                       response.data.ModelState['model.ConfirmedPassword'].forEach(function (item) {
+                           result += item + ' ';
+                       })
+
+                       return result;
                    }
 
-                   return response.data.ModelState[""][0];
+                   var result = '';
+
+                   response.data.ModelState[""].forEach(function (item) {
+                       result += item + ' ';
+                   })
+
+                   return result;
                });
 
                return promise;

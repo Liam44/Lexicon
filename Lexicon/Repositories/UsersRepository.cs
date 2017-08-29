@@ -30,6 +30,16 @@ namespace Lexicon.Repositories
             return await GetUsers().FirstOrDefaultAsync(u => u.UserName == username);
         }
 
+        public async Task<User> GetUserByAFID(string afid)
+        {
+            return await GetUsers().FirstOrDefaultAsync(u => u.AFId == afid);
+        }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            return await GetUsers().FirstOrDefaultAsync(u => u.Email == email);
+        }
+
         public async Task Add(User user)
         {
             db.Users.Add(user);

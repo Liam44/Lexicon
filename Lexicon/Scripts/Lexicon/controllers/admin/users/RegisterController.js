@@ -7,7 +7,7 @@ angular.module('admin')
         function ($scope, UsersService, RolesService, $rootScope) {
             $scope.Title = "Register a new User";
 
-            $scope.LinkHref = '#!/Users';
+            $scope.LinkHref = 'Users';
 
             $scope.Roles = [];
 
@@ -23,10 +23,25 @@ angular.module('admin')
             }
 
             $scope.Register = function () {
+                // Basic values check
+                // -- Phone Number
+                $scope.CreateMessage = UsersService.CheckPhoneNumber($scope.phoneNumber);
+
+                if ($scope.CreateMessage) {
+                    return;
+                }
+
                 $rootScope.loading = true;
-                UsersService.Register($scope.firstName, $scope.lastName, $scope.afid, $scope.username, $scope.email, $scope.phoneNumber, $scope.role).then(function (u) {
-                    $scope.CreateMessage = u;
-                    $rootScope.loading = false;
-                });
+                UsersService.Register($scope.firstName,
+                                      $scope.lastName,
+                                      $scope.afid,
+                                      $scope.username,
+                                      $scope.email,
+                                      $scope.phoneNumber,
+                                      $scope.role)
+                    .then(function (u) {
+                        $scope.CreateMessage = u;
+                        $rootScope.loading = false;
+                    });
             };
         }]);

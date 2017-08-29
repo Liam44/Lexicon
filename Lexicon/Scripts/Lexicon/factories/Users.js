@@ -90,10 +90,10 @@ angular.module('users')
                 headers: tokenService.GetToken()
             })
                 .then(function (response) {
-                    return response.statusText;
+                    return 'User registered!';
                 },
                 function (response) {
-                    return response.statusText;
+                    return ExtractErrorMessage(response.data.ModelState);
                 });
 
             return promise;
@@ -119,21 +119,55 @@ angular.module('users')
                 headers: tokenService.GetToken()
             })
                 .then(function (response) {
-                    return "Updated";
+                    return 'Account updated!';
                     // return response.statusText + ' ' + response.status + ' ' + response.data;
                 },
                 function (response) {
-                    var result = response.statusText + ' ' + response.status;
-
-                    if (response.data.Message) {
-                        result += ' ' + response.data.Message;
-                    }
-
-                    return result;
+                    return ExtractErrorMessage(response.data.ModelState);
                 });
 
             return promise;
         };
+
+        function ExtractErrorMessage(modelState) {
+            if (modelState['model.Username']) {
+                var result = '';
+
+                modelState['model.Username'].forEach(function (item) {
+                    result += item + ' ';
+                })
+
+                return result;
+            }
+
+            if (modelState['model.FirstName']) {
+                var result = '';
+
+                modelState['model.FirstName'].forEach(function (item) {
+                    result += item + ' ';
+                })
+
+                return result;
+            }
+
+            if (modelState['model.LastName']) {
+                var result = '';
+
+                modelState['model.LastName'].forEach(function (item) {
+                    result += item + ' ';
+                })
+
+                return result;
+            }
+
+            var result = '';
+
+            modelState[""].forEach(function (item) {
+                result += item + ' ';
+            })
+
+            return result;
+        }
 
         // delete the data from database
         thisUserService.Remove = function (userId) {
@@ -152,6 +186,22 @@ angular.module('users')
 
             return promise;
         };
+
+        // Checks that the phone number matches the following regular expression:
+        // should start with (\d{2,3}) or +\d{2,3} or empty string
+        // followed by a serie of digits optionally separated by - . and spaces
+        // and end with a digit
+        thisUserService.CheckPhoneNumber = function (phonenumber) {
+            if (/^(\(\d{2,3}\)|\+\d{2,3})?\d(\d*|((\s|-|.)\d)*)*$/.exec(phonenumber)) {
+                return undefined;
+            }
+            else {
+                return 'The phone number must only contain digits, spaces and hyphens, ' +
+                                               'can start with "(" or "+" or a digit ' +
+                                               'and end at least with one digit. ' +
+                                               'Double separator caracters are not allowed.';
+            }
+        }
 
         return thisUserService;
     }]);

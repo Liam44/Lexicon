@@ -7,7 +7,7 @@ angular.module('teacher')
         function ($scope, UsersService, RolesService, $rootScope) {
             $scope.Title = "Register a new Student";
 
-            $scope.LinkHref = '#!/Students';
+            $scope.LinkHref = 'Students';
 
             var role = { 'Key': 0, 'Value': 'Student' };
 
@@ -17,6 +17,14 @@ angular.module('teacher')
             }
 
             $scope.Register = function () {
+                // Basic values check
+                // -- Phone Number
+                $scope.CreateMessage = UsersService.CheckPhoneNumber($scope.phoneNumber);
+
+                if ($scope.CreateMessage) {
+                    return;
+                }
+
                 $rootScope.loading = true;
                 UsersService.Register($scope.firstName,
                                       $scope.lastName,
@@ -25,7 +33,7 @@ angular.module('teacher')
                                       $scope.email,
                                       $scope.phoneNumber,
                                       $scope.Roles[0].Key).then(function (u) {
-                    $scope.CreateMessage = u;
+                    $scope.CreateMessage = 'Student registered!';
                     $rootScope.loading = false;
                 });
             };

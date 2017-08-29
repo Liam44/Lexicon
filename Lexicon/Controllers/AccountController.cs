@@ -352,7 +352,13 @@ namespace Lexicon.Controllers
                 return BadRequest(ModelState);
             }
 
-            User user = new User()
+            // Checks the unicity of the AF ID
+            User user = await new UsersRepository().GetUserByAFID(model.AFId);
+
+            if (user != null)
+                return GetErrorResult(IdentityResult.Failed("The provided AF ID alreadys exists and must be unique."));
+
+            user = new User()
             {
                 UserName = model.Username,
                 FirstName = model.FirstName,
@@ -403,12 +409,18 @@ namespace Lexicon.Controllers
                 // Checks that the UserName is still unique
                 UsersRepository repository = new UsersRepository();
 
-                User originalUser = await repository.GetUserByUsername(user.Username);
+                User originalUser = await repository.GetUserByAFID(user.AFId);
+                if (originalUser.Id != user.Id)
+                    return GetErrorResult(IdentityResult.Failed("The provided AFID already exists and must be unique."));
+
+                originalUser = await repository.GetUserByEmail(user.Email);
+                if (originalUser.Id != user.Id)
+                    return GetErrorResult(IdentityResult.Failed("A user with the same email address already exists."));
+
+                originalUser = await repository.GetUserByUsername(user.Username);
 
                 if (originalUser.Id != id)
-                {
-                    return BadRequest("A user with the same username already exists!");
-                }
+                    return GetErrorResult(IdentityResult.Failed("A user with the same username already exists!"));
 
                 originalUser = await repository.GetUserById(user.Id);
 

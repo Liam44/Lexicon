@@ -7,7 +7,7 @@ angular.module('admin')
         function ($scope, UsersService, PasswordService, $rootScope) {
             $scope.Title = "Registered Users";
 
-            $scope.LinkHref = '#!/Users';
+            $scope.LinkHref = 'Users';
             $scope.LinkTitle = 'Register a new user';
             $scope.LinkText = 'Register a new user';
 

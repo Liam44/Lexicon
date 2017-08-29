@@ -1,5 +1,5 @@
 ﻿<h1>{{Title}}</h1>
-<a href="{{LinkHref}}/Register" title="{{LinkTitle}}">{{LinkText}}</a>
+<a href="#!/{{LinkHref}}/Register" title="{{LinkTitle}}">{{LinkText}}</a>
 <table class="table table-striped table-responsive vertical-centered">
     <thead>
         <tr>
@@ -86,8 +86,8 @@
             <td>{{u.PhoneNumber}}</td>
             <td>{{u.RoleName}}</td>
             <td>
-                <p class="href"><a href="{{LinkHref}}/Edit/{{u.Id}}">Edit</a></p>
-                <p class="href"><a href="{{LinkHref}}/Details/{{u.Id}}">Details</a></p>
+                <p class="href"><a href="#!/{{LinkHref}}/Edit/{{u.Id}}">Edit</a></p>
+                <p class="href"><a href="#!/{{LinkHref}}/Details/{{u.Id}}">Details</a></p>
                 <p class="href">
                     <a href="javascript:void(0)" ng-click="ResetPassword(u.FirstName + ' ' + u.LastName, u.Id)">Reset password</a>
                 </p>
