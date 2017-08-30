@@ -197,8 +197,8 @@ p.href {
 }
 
 textarea.content-message {
-    width:50em; /* equiv. 50 caracters wide */
-    height:10em;  /* equiv. 10 rows high */
+    width: 50em; /* equiv. 50 caracters wide */
+    height: 10em; /* equiv. 10 rows high */
     max-width: initial;
 }
 
@@ -257,5 +257,35 @@ textarea.content-message {
 }
 
     .courseday-content a {
-        text-align:center;
+        text-align: center;
     }
+
+.add-another-day {
+    padding: 20px 28px 20px 28px;
+}
+
+    .add-another-day a {
+        font-size: 1.2em;
+        vertical-align: middle;
+        color: rgba(39, 66, 79, 0.50);
+        text-decoration: none;
+        text-align: center;
+    }
+
+.delete-day a {
+    font-size: 0.8em;
+    color: rgba(39, 66, 79, 0.50);
+    text-decoration: none;
+}
+
+.pluralsight-link {
+    display: none;
+    width: 100%;
+}
+
+    a:hover + .pluralsight-link, .pluralsight-link:hover {
+        display: block;
+        position: relative;
+        z-index: 100;
+    }
+}

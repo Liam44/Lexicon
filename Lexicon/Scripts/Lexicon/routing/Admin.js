@@ -54,11 +54,6 @@ angular.module('admin')
                 templateUrl: '../templates/Courses/edit.html',
                 controller: 'CoursesEditController'
             })
-            .when('/CourseDays',
-            {
-                templateUrl: '../templates/CourseDays/index.html',
-                controller: 'CourseDaysController'
-            })
             .when('/CourseDays/Details/:id',
             {
                 templateUrl: '../templates/CourseDays/details.html',

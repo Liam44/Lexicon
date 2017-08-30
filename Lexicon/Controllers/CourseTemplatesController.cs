@@ -1,6 +1,8 @@
-﻿using Lexicon.Models.Lexicon;
+﻿using Lexicon.Models;
+using Lexicon.Models.Lexicon;
 using Lexicon.Repositories;
 using Lexicon.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -63,6 +65,82 @@ namespace SinglePageWebApplication.Controllers
             await repository.Add(courseTemplate);
 
             return CreatedAtRoute("DefaultApi", new { id = courseTemplate.ID }, courseTemplate);
+        }
+
+        // POST: api/CourseTemplates/AddCourse/5
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> AddCourseDay(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            CourseTemplate template = await repository.CourseTemplate(id);
+
+            if (template == null)
+                return NotFound();
+
+            await new CourseDaysRepository().CreateCourseDay(template.CourseDays.Count + 1, templateId: id);
+
+            template.AmountDays += 1;
+            if (await repository.Edit(id, template))
+                return StatusCode(HttpStatusCode.NoContent);
+            else
+                return NotFound();
+        }
+
+        // POST: api/CourseTemplates/AddCourse/5
+        [HttpPost]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> DeleteCourseDay(DeleteCourseDayVM model)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                CourseDaysRepository cdRepo = new CourseDaysRepository(db);
+                CourseDay courseDay = await cdRepo.CourseDay(model.CourseDayID);
+
+                if (courseDay == null)
+                    return NotFound();
+
+                if (courseDay.CourseTemplateID != model.CourseTemplateID)
+                    return NotFound();
+
+                await cdRepo.Delete(courseDay);
+
+                repository = new CourseTemplatesRepository(db);
+
+                CourseTemplate template = await repository.CourseTemplate(model.CourseTemplateID);
+
+                if (template == null)
+                    return NotFound();
+
+                template.AmountDays -= 1;
+                if (await repository.Edit(template.ID, template))
+                {
+                    await cdRepo.UpdateDayNumbers(template.CourseDays.ToList());
+
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+                else
+                    return NotFound();
+            }
+            catch (Exception ex)
+            {
+                var x = ex;
+                return NotFound();
+            }
+            finally
+            {
+                db.Dispose();
+            }
         }
 
         [ResponseType(typeof(void))]

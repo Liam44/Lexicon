@@ -54,6 +54,11 @@ angular.module('teacher')
                 templateUrl: '../templates/Courses/edit.html',
                 controller: 'CoursesEditController'
             })
+            .when('/CourseDays/Details/:id',
+            {
+                templateUrl: '../templates/CourseDays/details.html',
+                controller: 'CourseDaysDetailsController'
+            })
             .when('/AddAttendance',
             {
                 templateUrl: '../templates/Attendances/add.html',

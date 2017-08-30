@@ -2,7 +2,7 @@
 // CRUD - Create respective controllers for each view
 // ===================================================
 // Templates - Details - Templates controller
-angular.module('admin')
+angular.module('teacher')
        .controller('TemplatesDetailsController', ['$scope', 'TemplatesService', 'CourseDaysService', '$routeParams', '$rootScope', '$compile',
         function ($scope, TemplatesService, CourseDaysService, $routeParams, $rootScope, $compile) {
             $scope.Title = 'Details';

@@ -14,7 +14,17 @@ namespace Lexicon.Repositories
 {
     public class TeachersAssignmentsRepository : IDisposable
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+
+        public TeachersAssignmentsRepository()
+        {
+            db = new ApplicationDbContext();
+        }
+
+        public TeachersAssignmentsRepository(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
 
         /// <summary>
         /// Gets all assignments related to a course part

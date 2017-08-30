@@ -15,7 +15,17 @@ namespace Lexicon.Repositories
 {
     public class LinksRepository : IDisposable
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+
+        public LinksRepository()
+        {
+            db = new ApplicationDbContext();
+        }
+
+        public LinksRepository(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
 
         /// <summary>
         /// Gets all links related to a coruse part

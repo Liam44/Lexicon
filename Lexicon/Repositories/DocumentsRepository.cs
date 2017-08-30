@@ -14,7 +14,17 @@ namespace Lexicon.Repositories
 {
     public class DocumentsRepository : IDisposable
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+
+        public DocumentsRepository()
+        {
+            db = new ApplicationDbContext();
+        }
+
+        public DocumentsRepository(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
 
         /// <summary>
         /// Gets all document uploaded for a course part

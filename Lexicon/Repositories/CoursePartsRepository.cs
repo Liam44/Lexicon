@@ -11,7 +11,17 @@ namespace Lexicon.Repositories
 {
     public class CoursePartsRepository : IDisposable
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+
+        public CoursePartsRepository()
+        {
+            db = new ApplicationDbContext();
+        }
+
+        public CoursePartsRepository(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
 
         /// <summary>
         /// Gets all parts for a course day
@@ -77,6 +87,21 @@ namespace Lexicon.Repositories
 
         public async Task Delete(CoursePart coursePart)
         {
+            // Due to the 0..* relationship between the tables,
+            // all documents related to the course part must be deleted first
+            DocumentsRepository docRepo = new DocumentsRepository(db);
+            foreach (Document doc in coursePart.Files.ToList()) {
+                await docRepo.Delete(doc);
+            }
+
+            // Due to the 0..* relationship between the tables,
+            // all links related to the course part must be deleted first
+            LinksRepository linksRepo = new LinksRepository(db);
+            foreach (Link link in coursePart.Pluralsight.ToList())
+            {
+                await linksRepo.Delete(link);
+            }
+
             db.CourseParts.Remove(coursePart);
             await db.SaveChangesAsync();
         }

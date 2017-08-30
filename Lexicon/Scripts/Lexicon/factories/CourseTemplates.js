@@ -83,6 +83,45 @@ angular.module('templates')
                return promise;
            };
 
+           // post the data from database
+           thisTemplateService.AddCourseDay = function (templateId) {
+               var promise = $http({
+                   method: 'POST',
+                   url: '/api/CourseTemplates/AddCourseDay/' + templateId,
+                   headers: tokenService.GetToken()
+               })
+               .then(function (response) {
+                   return response.statusText;
+               },
+               function (response) {
+                   return response.statusText;
+               });
+
+               return promise;
+           };
+
+           // post the data from database
+           thisTemplateService.DeleteCourseDay = function (templateId, courseDayId) {
+               var model = {
+                   CourseTemplateID: templateId,
+                   CourseDayID: courseDayId
+               };
+               var promise = $http({
+                   method: 'POST',
+                   url: '/api/CourseTemplates/DeleteCourseDay',
+                   data: model,
+                   headers: tokenService.GetToken()
+               })
+               .then(function (response) {
+                   return response.statusText;
+               },
+               function (response) {
+                   return response.statusText;
+               });
+
+               return promise;
+           };
+
            // delete the data from database
            thisTemplateService.Delete = function (id) {
                var promise = $http({

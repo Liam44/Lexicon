@@ -3,6 +3,7 @@ using Lexicon.Repositories;
 using Lexicon.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -55,6 +56,7 @@ namespace SinglePageWebApplication.Controllers
             {
                 ID = courseDay.ID,
                 DayNumber = courseDay.DayNumber,
+                CourseTemplateName = courseDay.CourseTemplate.Name,
                 Morning = new PartialCoursePartVM
                 {
                     ID = morning.ID,
@@ -89,6 +91,60 @@ namespace SinglePageWebApplication.Controllers
             await repository.Add(courseDay);
 
             return CreatedAtRoute("DefaultApi", new { id = courseDay.ID }, courseDay);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin,Teacher")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> MoveUp(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            CourseDay courseDayToMoveUp = await repository.CourseDay(id);
+
+            if (courseDayToMoveUp == null)
+                return NotFound();
+
+            CourseDay courseDayToMoveDown = await repository.CourseTemplateDay(courseDayToMoveUp.CourseTemplateID,
+                                                                               courseDayToMoveUp.DayNumber - 1);
+
+            courseDayToMoveUp.DayNumber -= 1;
+            await repository.Edit(courseDayToMoveUp.ID, courseDayToMoveUp);
+
+            courseDayToMoveDown.DayNumber += 1;
+            await repository.Edit(courseDayToMoveDown.ID, courseDayToMoveDown);
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin,Teacher")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> MoveDown(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            CourseDay courseDayToMoveDown = await repository.CourseDay(id);
+
+            if (courseDayToMoveDown == null)
+                return NotFound();
+
+            CourseDay courseDayToMoveUp = await repository.CourseTemplateDay(courseDayToMoveDown.CourseTemplateID,
+                                                                             courseDayToMoveDown.DayNumber + 1);
+
+            courseDayToMoveDown.DayNumber += 1;
+            await repository.Edit(courseDayToMoveDown.ID, courseDayToMoveDown);
+
+            courseDayToMoveUp.DayNumber -= 1;
+            await repository.Edit(courseDayToMoveUp.ID, courseDayToMoveUp);
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // DELETE: api/CourseDay/5

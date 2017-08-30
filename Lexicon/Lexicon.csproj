@@ -264,6 +264,7 @@
     <Compile Include="Repositories\UsersRepository.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\DeleteCourseDayVM.cs" />
     <Compile Include="ViewModels\PartialCoursePartVM.cs" />
     <Compile Include="ViewModels\PartialCourseDayVM.cs" />
     <Compile Include="ViewModels\PartialCourseTemplateVM.cs" />
@@ -316,6 +317,7 @@
     <Content Include="Lexicon\student\bundle-factories.html" />
     <Content Include="Lexicon\teacher\bundle-factories.html" />
     <Content Include="Lexicon\teacher\bundle-teacher.html" />
+    <Content Include="Lexicon\templates\courseparts\details.html" />
     <Content Include="Lexicon\templates\messages\history.html" />
     <Content Include="Lexicon\templates\messages\read.html" />
     <Content Include="Lexicon\templates\messages\reply.html" />
@@ -334,7 +336,6 @@
     <Content Include="Lexicon\teacher\index.html" />
     <Content Include="Lexicon\teacher\redirectError.html" />
     <Content Include="Scripts\angular-mocks.js" />
-    <Content Include="Scripts\angular-ngModules.js" />
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
@@ -353,7 +354,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Lexicon\controllers\admin\ChangePassword.js" />
-    <Content Include="Scripts\Lexicon\controllers\admin\coursedays\Controller.js" />
     <Content Include="Scripts\Lexicon\controllers\admin\coursedays\DetailsController.js" />
     <Content Include="Scripts\Lexicon\controllers\admin\templates\Controller.js" />
     <Content Include="Scripts\Lexicon\controllers\admin\templates\CreateController.js" />
@@ -390,6 +390,7 @@
     <Content Include="Scripts\Lexicon\controllers\student\news\DetailsController.js" />
     <Content Include="Scripts\Lexicon\controllers\student\news\EditController.js" />
     <Content Include="Scripts\Lexicon\controllers\teacher\Controller.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\coursedays\DetailsController.js" />
     <Content Include="Scripts\Lexicon\controllers\teacher\ErrorController.js" />
     <Content Include="Scripts\Lexicon\controllers\teacher\messages\Controller.js" />
     <Content Include="Scripts\Lexicon\controllers\teacher\messages\CreateController.js" />
@@ -405,6 +406,10 @@
     <Content Include="Scripts\Lexicon\controllers\teacher\students\DetailsController.js" />
     <Content Include="Scripts\Lexicon\controllers\teacher\students\EditController.js" />
     <Content Include="Scripts\Lexicon\controllers\teacher\students\RegisterController.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\templates\Controller.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\templates\CreateController.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\templates\DetailsController.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\templates\EditController.js" />
     <Content Include="Scripts\Lexicon\directives\bsActiveLink.js" />
     <Content Include="Scripts\Lexicon\factories\CourseDays.js" />
     <Content Include="Scripts\Lexicon\factories\CourseTemplates.js" />
@@ -429,7 +434,6 @@
     <Content Include="Lexicon\templates\attendances\index.html" />
     <Content Include="Lexicon\templates\attendances\report.html" />
     <Content Include="Lexicon\templates\coursedays\details.html" />
-    <Content Include="Lexicon\templates\coursedays\index.html" />
     <Content Include="Lexicon\templates\courses\add.html" />
     <Content Include="Lexicon\templates\courses\delete.html" />
     <Content Include="Lexicon\templates\courses\details.html" />

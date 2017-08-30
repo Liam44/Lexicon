@@ -9,7 +9,17 @@ namespace Lexicon.Repositories
 {
     public class CourseTemplatesRepository
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+
+        public CourseTemplatesRepository()
+        {
+            db = new ApplicationDbContext();
+        }
+
+        public CourseTemplatesRepository(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
 
         /// <summary>
         /// Gets all course templates
@@ -30,12 +40,12 @@ namespace Lexicon.Repositories
             return await db.CourseTemplates.FirstOrDefaultAsync(cd => cd.ID == id);
         }
 
-        public async Task Add(CourseTemplate courseTemplate)
+        public async Task Add(CourseTemplate template)
         {
-            db.CourseTemplates.Add(courseTemplate);
+            db.CourseTemplates.Add(template);
             await db.SaveChangesAsync();
 
-            await new CourseDaysRepository().CreateCourseDays(courseTemplate.ID, courseTemplate.AmountDays);
+            await new CourseDaysRepository().CreateCourseDays(template.AmountDays, templateId: template.ID);
         }
 
         public async Task<bool> Edit(int id, CourseTemplate courseTemplate)
@@ -63,6 +73,13 @@ namespace Lexicon.Repositories
 
         public async Task Delete(CourseTemplate courseTemplate)
         {
+            // All courses have to be deleted before the template
+            CourseDaysRepository cdRepo = new CourseDaysRepository(db);
+
+            foreach (CourseDay cd in courseTemplate.CourseDays.ToList()) {
+                await cdRepo.Delete(cd);
+            }
+
             db.CourseTemplates.Remove(courseTemplate);
             await db.SaveChangesAsync();
         }
