@@ -56,7 +56,10 @@ namespace SinglePageWebApplication.Controllers
             {
                 ID = courseDay.ID,
                 DayNumber = courseDay.DayNumber,
-                CourseTemplateName = courseDay.CourseTemplate.Name,
+                CourseTemplateID = courseDay.CourseTemplateID,
+                CourseTemplateName = courseDay.CourseTemplate == null ? string.Empty : courseDay.CourseTemplate.Name,
+                CourseID = courseDay.CourseID,
+                CourseName = courseDay.Course == null ? string.Empty : courseDay.Course.Name,
                 Morning = new PartialCoursePartVM
                 {
                     ID = morning.ID,

@@ -1,0 +1,28 @@
+﻿<h1>{{Title}}</h1>
+
+<div class="form-horizontal">
+    <table class="table">
+        <tr>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>AF ID</th>
+            <th>Email Address</th>
+            <th>Phone Number</th>
+            <th>Role</th>
+        </tr>
+        <tr>
+            <td>{{User.Username}}</td>
+            <td>{{User.FirstName}}</td>
+            <td>{{User.LastName}}</td>
+            <td>{{User.AFId}}</td>
+            <td>{{User.Email}}</td>
+            <td>{{User.PhoneNumber}}</td>
+            <td>{{User.RoleName}}</td>
+        </tr>
+    </table>
+</div>
+
+<hr />
+<a href="#!/{{LinkHref}}/Edit/{{User.Id}}">Edit</a> |
+<a href="#!/{{LinkHref}}">Back to List</a>

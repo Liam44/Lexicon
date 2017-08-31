@@ -36,11 +36,14 @@ angular.module('messages', ['token']);
 // Manages all actions allowed on course templates
 angular.module('templates', ['token']);
 
+// Manages all actions allowed on files
+angular.module('documents', ['token', 'ngAnimate', 'loading-spinner', 'ngFileUpload']);
+
 // Manages all actions allowed on courses
 angular.module('courses', ['token', 'coursetemplates']);
 
 // Manages all actions allowed on course days
-angular.module('coursedays', ['token']);
+angular.module('coursedays', ['token', 'documents']);
 
 // Manages all actions allowed on course parts
 angular.module('courseparts', ['token']);

@@ -28,7 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="doc in courseDay.Files | orderBy:propertyName:reverse">
+                <tr ng-repeat="doc in CourseDay.Files | orderBy:propertyName:reverse">
                     <td>{{doc.Name}}</td>
                     <td>{{doc.Class}}</td>
                     <td>{{doc.UploadingDate}}</td>
@@ -41,7 +41,7 @@
         </table>
     </div>
     <div class="form-group">
-        <button ng-click="UploadDocument(courseDay.ID)">Upload a new document</button>
+        <button type="button" href="#!/CourseDays/Upload/{{CourseDay.ID}}">Upload a new document</button>
     </div>
 </div>
 
@@ -63,7 +63,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="link in courseDay.Links | orderBy:propertyName:reverse">
+                <tr ng-repeat="link in CourseDay.Links | orderBy:propertyName:reverse">
                     <td>
                         <a href="{{link.HttpLink}}">{{link.HttpLink}}</a>
                         <div class="pluralsight-link">
@@ -79,11 +79,11 @@
     </div>
 
     <div class="form-group">
-        <button ng-click="AddLink(courseDay.ID)">Add a new link</button>
+        <button type="button" ng-click="AddLink(CourseDay.ID)">Add a new link</button>
     </div>
 </div>
 
-<div ng-show="courseDay.Attendances">
+<div ng-show="CourseDay.Attendances">
     <hr />
 
     <h2>Attendances</h2>
@@ -116,7 +116,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="attendance in courseDay.Attendances | orderBy:propertyName:reverse">
+                    <tr ng-repeat="attendance in CourseDay.Attendances | orderBy:propertyName:reverse">
                         <td>{{attendance.Student.FirstName}}</td>
                         <td>{{attendance.Student.LastName}}</td>
                         <td>{{attendance.Student.AFId}}</td>
@@ -127,7 +127,20 @@
         </div>
 
         <div class="form-group">
-            <button ng-click="ExportAttendance(courseDay.ID)">Export attendance</button>
+            <button type="button" ng-click="ExportAttendance(CourseDay.ID)">Export attendance</button>
         </div>
     </div>
+</div>
+
+<div class="form-group">
+    <button>See morning details</button>
+    <button>See afternoon details</button>
+</div>
+
+<div class="form-group" ng-show="CourseDay.CourseTemplateID">
+    <a href="#!/Templates/Details/{{CourseDay.CourseTemplateID}}">Back to {{CourseDay.CourseTemplateName}}</a>
+</div>
+
+<div class="form-group" ng-show="CourseDay.CourseID">
+    <a href="#!/Courses/Details/{{CourseDay.CourseID}}">Back to {{CourseDay.CourseName}}</a>
 </div>
