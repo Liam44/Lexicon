@@ -1,4 +1,6 @@
-﻿namespace Lexicon.ViewModels
+﻿using System.Collections.Generic;
+
+namespace Lexicon.ViewModels
 {
     public class PartialCourseDayVM
     {
@@ -13,5 +15,7 @@
 
         public PartialCoursePartVM Morning { get; set; }
         public PartialCoursePartVM Afternoon { get; set; }
+
+        public IEnumerable<PartialDocumentVM> Documents { get; set; }
     }
 }

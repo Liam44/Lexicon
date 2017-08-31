@@ -3,68 +3,68 @@
 // ===================================================
 // CourseDays - Details - CourseDays controller
 angular.module('admin')
-       .controller('CourseDaysUploadController', ['$scope', '$window', '$routeParams', 'DocumentsService', 'Upload', 'tokenService',
-           function ($scope, $window, $routeParams, DocumentsService, Upload, tokenService) {
+       .controller('CourseDaysUploadController', ['$scope', '$routeParams', '$rootScope', 'DocumentsService', 'Upload', 'tokenService', 'redirectService',
+           function ($scope, $routeParams, $rootScope, DocumentsService, Upload, tokenService, redirectService) {
                //Variables
-               $scope.photos = [];
+               $scope.Title = 'Uploading documents';
+               $scope.documents = [];
                $scope.files = [];
-               $scope.previewPhoto = {};
-               $scope.spinner = {
-                   active: true
-               };
+               $scope.classes = [];
+               $scope.documentClass = undefined;
+
+               $scope.CourseDayID = $routeParams.id;
 
                //Functions
-               function setPreviewPhoto(photo) {
-                   $scope.previewPhoto = photo;
-               }
-
                function activate() {
-                   $scope.spinner.active = true;
-                   DocumentsService.getAll()
-                     .then(function (data) {
-                         $scope.photos = data.data.Photos;
-                         $scope.spinner.active = false;
-                         setPreviewPhoto();
-                     }, function (err) {
-                         console.log("Error status: " + err.status);
-                         $scope.spinner.active = false;
-                     });
+                   $rootScope.loading = true;
+                   $scope.files = [];
+                   DocumentsService.getDocumentClasses()
+                       .then(function (data) {
+                           $scope.classes = data.data;
+                           DocumentsService.getAll()
+                             .then(function (data) {
+                                 $scope.documents = data.data.Documents;
+                                 $rootScope.loading = false;
+                             },
+                             function (err) {
+                                 console.log("Error status: " + err.status);
+                                 $rootScope.loading = false;
+                             });
+                       },
+                       function (err) {
+                           console.log("Error status: " + err.status);
+                           $rootScope.loading = false;
+                       });
                }
 
                function uploadFiles(files) {
                    if (files.length) {
-                       $scope.spinner.active = true;
+                       if ($scope.documentClass === undefined) {
+                           alert('A document class must be selected!');
+                           document.getElementById('documentClass').focus();
+                           return;
+                       }
+
+                       $rootScope.loading = true;
                        Upload.upload({
-                           url: '/api/Documents/Add/',
+                           url: '/api/Documents/Upload/',
                            headers: tokenService.GetToken(),
                            data: {
                                file: files,
-                               CourseDayID: $routeParams.id
+                               CourseDayID: $routeParams.id,
+                               DocumentClass: $scope.documentClass
                            }
                        })
                          .then(function (response) {
-                             activate();
-                             setPreviewPhoto();
-                             $scope.spinner.active = false;
+                             redirectService.To('CourseDays', $scope.CourseDayID);
                          }, function (err) {
                              console.log("Error status: " + err.status);
-                             $scope.spinner.active = false;
+                             $rootScope.loading = false;
                          });
                    }
-               }
-
-               function removePhoto(photo) {
-                   DocumentsService.deletePhoto(photo.Name)
-                     .then(function () {
-                         activate();
-
-                         setPreviewPhoto();
-                     });
                }
 
                //Set scope 
                activate();
                $scope.uploadFiles = uploadFiles;
-               $scope.remove = removePhoto;
-               $scope.setPreviewPhoto = setPreviewPhoto;
            }]);

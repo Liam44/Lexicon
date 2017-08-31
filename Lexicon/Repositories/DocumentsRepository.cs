@@ -26,6 +26,12 @@ namespace Lexicon.Repositories
             this.db = db;
         }
 
+        /// Temporary method
+        public IEnumerable<Document> Documents()
+        {
+            return db.Documents;
+        }
+
         /// <summary>
         /// Gets all document uploaded for a course part
         /// </summary>
@@ -66,6 +72,16 @@ namespace Lexicon.Repositories
             return await db.Documents.FirstOrDefaultAsync(cd => cd.ID == id);
         }
 
+        /// <summary>
+        /// Gets a specific document day
+        /// </summary>
+        /// <param name="id">ID of the document day</param>
+        /// <returns></returns>
+        public async Task<Document> Document(string fileName)
+        {
+            return await db.Documents.FirstOrDefaultAsync(cd => cd.Name == fileName);
+        }
+
         public async Task Add(Document documentDay)
         {
             db.Documents.Add(documentDay);
@@ -97,9 +113,9 @@ namespace Lexicon.Repositories
             }
         }
 
-        public async Task Delete(Document documentDay)
+        public async Task Delete(Document document)
         {
-            db.Documents.Remove(documentDay);
+            db.Documents.Remove(document);
             await db.SaveChangesAsync();
         }
 
@@ -118,7 +134,7 @@ namespace Lexicon.Repositories
         /// <returns></returns>
         public async Task<Document> Clone(Document document,
                                           int? courseDayId = null,
-                                          int? coursePartId = null, 
+                                          int? coursePartId = null,
                                           int? teachersAssignmentId = null)
         {
             Document clone = new Document
@@ -131,7 +147,7 @@ namespace Lexicon.Repositories
                 UploaderID = document.UploaderID,
                 CourseDayID = courseDayId,
                 CoursePartID = coursePartId,
-                AssignmentID=teachersAssignmentId
+                AssignmentID = teachersAssignmentId
             };
 
             await Add(clone);

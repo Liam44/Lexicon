@@ -3,6 +3,7 @@ using Lexicon.Models;
 using Lexicon.Models.Lexicon;
 using Lexicon.Repositories;
 using Lexicon.ViewModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +22,18 @@ namespace SinglePageWebApplication.Controllers
     public class DocumentsController : ApiController
     {
         private DocumentsRepository repository = new DocumentsRepository();
+
+        public List<EnumDocumentClassesVM> GetDocumentClasses()
+        {
+            List<EnumDocumentClassesVM> result = new List<EnumDocumentClassesVM>();
+
+            foreach (DocumentClass documentClass in Enum.GetValues(typeof(DocumentClass)))
+            {
+                result.Add(new EnumDocumentClassesVM { Key = documentClass, Value = documentClass.ToString() });
+            }
+
+            return result;
+        }
 
         // GET: api/Document/5
         [ResponseType(typeof(PartialDocumentVM))]
@@ -125,56 +138,41 @@ namespace SinglePageWebApplication.Controllers
         /// <returns></returns>
         public async Task<IHttpActionResult> Get()
         {
-            var photos = new List<PhotoViewModel>();
+            var documents = new List<PartialDocumentVM>();
 
             var photoFolder = new DirectoryInfo(workingFolder);
 
             await Task.Factory.StartNew(() =>
             {
-                photos = photoFolder.EnumerateFiles()
-                    .Where(fi => new[] { ".jpeg", ".jpg", ".bmp", ".png", ".gif", ".tiff" }
-                        .Contains(fi.Extension.ToLower()))
-                    .Select(fi => new PhotoViewModel
-                    {
-                        Name = fi.Name,
-                        Created = fi.CreationTime,
-                        Modified = fi.LastWriteTime,
-                        Size = fi.Length / 1024
-                    })
-                    .ToList();
+                documents = PartialDocuments(repository.Documents());
             });
 
-            return Ok(new { Photos = photos });
+            return Ok(new { Documents = documents });
         }
 
         /// <summary>
         ///   Delete photo
         /// </summary>
-        /// <param name="fileName"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IHttpActionResult> Delete(string fileName)
+        public async Task<IHttpActionResult> Delete(int id)
         {
-            if (!FileExists(fileName))
+            Document document = await repository.Document(id);
+
+            if (document == null)
             {
                 return NotFound();
             }
 
             try
             {
-                var filePath = Directory.GetFiles(workingFolder, fileName)
-                    .FirstOrDefault();
-
-                await Task.Factory.StartNew(() =>
-                {
-                    if (filePath != null)
-                        File.Delete(filePath);
-                });
+                await repository.Delete(document);
 
                 var result = new PhotoActionResult
                 {
                     Successful = true,
-                    Message = fileName + "deleted successfully"
+                    Message = document.Name + " deleted successfully"
                 };
                 return Ok(new { message = result.Message });
             }
@@ -193,7 +191,7 @@ namespace SinglePageWebApplication.Controllers
         ///   Add a photo
         /// </summary>
         /// <returns></returns>
-        public async Task<IHttpActionResult> Add()
+        public async Task<IHttpActionResult> Upload()
         {
             // Check if the request contains multipart/form-data.
             if (!Request.Content.IsMimeMultipartContent("form-data"))
@@ -206,22 +204,55 @@ namespace SinglePageWebApplication.Controllers
                 //await Request.Content.ReadAsMultipartAsync(provider);
                 await Task.Run(async () => await Request.Content.ReadAsMultipartAsync(provider));
 
-                var photos = new List<PhotoViewModel>();
+                var documents = new List<Document>();
 
                 foreach (var file in provider.FileData)
                 {
                     var fileInfo = new FileInfo(file.LocalFileName);
 
-                    photos.Add(new PhotoViewModel
+                    Document document = new Document
                     {
-                        CourseDayID = int.Parse(provider.FormData["CourseDayID"]),
                         Name = fileInfo.Name,
-                        Created = fileInfo.CreationTime,
-                        Modified = fileInfo.LastWriteTime,
-                        Size = fileInfo.Length / 1024
-                    });
+                        UploadingDate = DateTime.Now,
+                        UploaderID = User.Identity.GetUserId(),
+                        Class = (DocumentClass)(int.Parse(provider.FormData["DocumentClass"])),
+                    };
+
+                    string strCourseId = provider.FormData["CourseID"];
+
+                    if (strCourseId != null)
+                    {
+                        document.CourseID = int.Parse(strCourseId);
+                    }
+
+                    string strCourseDayId = provider.FormData["CourseDayID"];
+
+                    if (strCourseDayId != null)
+                    {
+                        document.CourseDayID = int.Parse(strCourseDayId);
+                    }
+
+                    string strCoursePartId = provider.FormData["CoursePartID"];
+
+                    if (strCoursePartId != null)
+                    {
+                        document.CoursePartID = int.Parse(strCoursePartId);
+                    }
+
+                    string strAssignmentId = provider.FormData["AssignmentID"];
+
+                    if (strAssignmentId != null)
+                    {
+                        document.AssignmentID = int.Parse(strAssignmentId);
+                    }
+
+                    await repository.Add(document);
+
+                    documents.Add(document);
+
+                    fileInfo.Delete();
                 }
-                return Ok(new { Message = "Photos uploaded ok", Photos = photos });
+                return Ok(new { Message = "Documents uploaded ok", Documents = PartialDocuments(documents) });
             }
             catch (Exception ex)
             {
@@ -229,17 +260,19 @@ namespace SinglePageWebApplication.Controllers
             }
         }
 
-        /// <summary>
-        ///   Check if file exists on disk
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        public bool FileExists(string fileName)
+        private List<PartialDocumentVM> PartialDocuments(IEnumerable<Document> documents)
         {
-            var file = Directory.GetFiles(workingFolder, fileName)
-                .FirstOrDefault();
-
-            return file != null;
+            return documents.Select(d => new PartialDocumentVM
+            {
+                ID = d.ID,
+                CourseID = d.CourseID,
+                CourseDayID = d.CourseDayID,
+                CoursePartID = d.CoursePartID,
+                AssignmentID = d.AssignmentID,
+                Name = d.Name,
+                Uploaded = d.UploadingDate.ToString(),
+                DocumentClass = d.Class.ToString()
+            }).ToList();
         }
     }
 }

@@ -49,9 +49,6 @@ namespace SinglePageWebApplication.Controllers
 
         private PartialCourseDayVM PartialDay(CourseDay courseDay)
         {
-            CoursePart morning = courseDay.CourseParts.First();
-            CoursePart afternoon = courseDay.CourseParts.Last();
-
             return new PartialCourseDayVM
             {
                 ID = courseDay.ID,
@@ -60,24 +57,15 @@ namespace SinglePageWebApplication.Controllers
                 CourseTemplateName = courseDay.CourseTemplate == null ? string.Empty : courseDay.CourseTemplate.Name,
                 CourseID = courseDay.CourseID,
                 CourseName = courseDay.Course == null ? string.Empty : courseDay.Course.Name,
-                Morning = new PartialCoursePartVM
-                {
-                    ID = morning.ID,
-                    PartDay = morning.PartDay.ToString(),
-                    CodeAlong_Lecture = morning.CodeAlong_Lecture,
-                    Files = morning.Files.ToList(),
-                    Pluralsight = morning.Pluralsight.ToList(),
-                    Assignments = morning.Assignments.ToList()
-                },
-                Afternoon = new PartialCoursePartVM
-                {
-                    ID = afternoon.ID,
-                    PartDay = afternoon.PartDay.ToString(),
-                    CodeAlong_Lecture = afternoon.CodeAlong_Lecture,
-                    Files = afternoon.Files.ToList(),
-                    Pluralsight = afternoon.Pluralsight.ToList(),
-                    Assignments = afternoon.Assignments.ToList()
-                }
+                Documents = courseDay.Files
+                                     .Select(f => new PartialDocumentVM
+                                     {
+                                         ID = f.ID,
+                                         Name = f.Name,
+                                         Uploaded = f.UploadingDate.ToString(),
+                                         UploadedBy = f.Uploader.ToString(),
+                                         DocumentClass = f.Class.ToString()
+                                     }),
             };
         }
 

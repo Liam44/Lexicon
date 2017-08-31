@@ -248,7 +248,6 @@
     <Compile Include="Models\Lexicon\TeachersAssignment.cs" />
     <Compile Include="Models\Lexicon\User.cs" />
     <Compile Include="Models\PhotoActionResult.cs" />
-    <Compile Include="Models\PhotoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Repositories\AttendancesRepository.cs" />
@@ -269,6 +268,7 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\DeleteCourseDayVM.cs" />
+    <Compile Include="ViewModels\EnumDocumentClassesVM.cs" />
     <Compile Include="ViewModels\PartialDocumentVM.cs" />
     <Compile Include="ViewModels\PartialCoursePartVM.cs" />
     <Compile Include="ViewModels\PartialCourseDayVM.cs" />
@@ -474,13 +474,9 @@
     <Content Include="Lexicon\templates\users\register.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
-    <Content Include="Scripts\angular-file-upload.js" />
-    <Content Include="Scripts\angular-file-upload.min.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
-    <Content Include="Scripts\angular-file-upload.min.js.map" />
-    <Content Include="Scripts\angular-file-upload.js.map" />
     <Content Include="App\home\Login.html" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Lexicon\admin\home.html" />
@@ -569,9 +565,6 @@
     <Content Include="Scripts\Lexicon\controllers\teacher\templates\DetailsController.js" />
     <Content Include="Scripts\Lexicon\controllers\teacher\templates\EditController.js" />
     <Content Include="Scripts\Lexicon\directives\bsActiveLink.js" />
-    <Content Include="Scripts\Lexicon\directives\loading-spinner.css" />
-    <Content Include="Scripts\Lexicon\directives\loading-spinner.html" />
-    <Content Include="Scripts\Lexicon\directives\loading-spinner.js" />
     <Content Include="Scripts\Lexicon\factories\CourseDays.js" />
     <Content Include="Scripts\Lexicon\factories\CourseTemplates.js" />
     <Content Include="Scripts\Lexicon\factories\CurrentUser.js" />

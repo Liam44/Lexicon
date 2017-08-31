@@ -15,8 +15,8 @@
                         </p>
                     </th>
                     <th>
-                        <p class="p-sort" ng-click="orderBy('Class')">
-                            Class
+                        <p class="p-sort" ng-click="orderBy('DocumentClass')">
+                            Document Class
                         </p>
                     </th>
                     <th>
@@ -24,14 +24,20 @@
                             Uploaded
                         </p>
                     </th>
+                    <th>
+                        <p class="p-sort" ng-click="orderBy('UploadedBy')">
+                            By
+                        </p>
+                    </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="doc in CourseDay.Files | orderBy:propertyName:reverse">
+                <tr ng-repeat="doc in CourseDay.Documents | orderBy:propertyName:reverse">
                     <td>{{doc.Name}}</td>
-                    <td>{{doc.Class}}</td>
-                    <td>{{doc.UploadingDate}}</td>
+                    <td>{{doc.DocumentClass}}</td>
+                    <td>{{doc.Uploaded}}</td>
+                    <td>{{doc.UploadedBy}}</td>
                     <td>
                         <a href="#!/Documents/Download/{{doc.ID}}">Download</a> |
                         <a href="javascript:void(0)" ng-click="DeleteDocument(doc.Name, doc.ID)">Delete</a>
@@ -41,7 +47,7 @@
         </table>
     </div>
     <div class="form-group">
-        <button type="button" href="#!/CourseDays/Upload/{{CourseDay.ID}}">Upload a new document</button>
+        <a class="btn btn-default" href="#!/CourseDays/Upload/{{CourseDay.ID}}">Upload a new document</a>
     </div>
 </div>
 

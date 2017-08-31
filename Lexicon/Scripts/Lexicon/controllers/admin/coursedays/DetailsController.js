@@ -18,4 +18,13 @@ angular.module('admin')
                     $rootScope.loading = false;
                 });
             }
+
+            $scope.propertyName = 'Name';
+            $scope.reverse = false;
+            $scope.orderBy = orderBy;
+
+            function orderBy(propertyName) {
+                $scope.reverse = $scope.propertyName === propertyName ? !$scope.reverse : false;
+                $scope.propertyName = propertyName;
+            }
         }]);

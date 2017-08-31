@@ -6,19 +6,24 @@ angular.module('documents')
            var thisDocumentService = {};
 
            //Get all photos saved on the server  
+           thisDocumentService.getDocumentClasses = function () {
+               var promise = $http({
+                   method: 'GET',
+                   url: '/api/Documents/GetDocumentClasses/',
+                   headers: tokenService.GetToken()
+               })
+                   .then(function (response) {
+                       return response;
+                   },
+                   function (response) {
+                       return response;
+                   });
+
+               return promise;
+           }
+
+           //Get all photos saved on the server  
            thisDocumentService.getAll = function () {
-               //var deferred = $q.defer();
-
-               //$http.get('/api/Documents/Get')
-               //  .then(function (result) {
-               //      deferred.resolve(result);
-               //  },
-               //  function errorCallback(error) {
-               //      deferred.reject(error);
-               //  });
-
-               //return deferred.promise;
-
                var promise = $http({
                    method: 'GET',
                    url: '/api/Documents/Get/',
@@ -35,19 +40,7 @@ angular.module('documents')
            }
 
            //Get photo from server with given file name        
-           thisDocumentService.getPhoto = function (fileName) {
-               //var deferred = $q.defer();
-
-               //$http.get('/api/Documents/Get/' + fileName)
-               //  .then(function (result) {
-               //      deferred.resolve(result);
-               //  },
-               //  function errorCallback(error) {
-               //      deferred.reject(error);
-               //  });
-
-               //return deferred.promise;
-
+           thisDocumentService.getDocument = function (fileName) {
                var promise = $http({
                    method: 'GET',
                    url: '/api/Documents/Get/' + fileName,
@@ -64,24 +57,12 @@ angular.module('documents')
            }
 
            // Delete photo on the server with given file name      
-           thisDocumentService.deletePhoto = function (fileName) {
-               //var deferred = $q.defer();
-
-               //$http.delete('/api/Documents/Delete/', { params: { fileName: fileName } })
-               //  .then(function (result) {
-               //      deferred.resolve(result);
-               //  },
-               //  function errorCallback(error) {
-               //      deferred.reject(error);
-               //  });
-
-               //return deferred.promise;
-
+           thisDocumentService.deleteDocument = function (id) {
                var promise = $http({
                    method: 'DELETE',
                    url: '/api/Documents/Delete/',
                    headers: tokenService.GetToken(),
-                   params: { fileName: fileName}
+                   params: { id: id}
                })
                    .then(function (response) {
                        return response;
