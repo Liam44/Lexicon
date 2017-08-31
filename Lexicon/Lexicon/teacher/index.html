@@ -7,25 +7,38 @@
 
     <link rel="stylesheet" href="/Content/bootstrap.min.css" />
     <link rel="stylesheet" href="/Content/Site.css" />
+
     <link rel="import" href="/Lexicon/bundle-angular.html" />
+
+    <script src="/Scripts/angular.js"></script>
+    <script src="/Scripts/angular-route.min.js"></script>
+    <script src="/Scripts/ng-file-upload.min.js"></script>
+    <script src="/Scripts/Lexicon/modules/modules.js"></script>
+    <script src="/Scripts/Lexicon/directives/bsActiveLink.js"></script>
+
+
     <link rel="import" href="bundle-factories.html" />
+
+    <script src="/Scripts/Lexicon/factories/CourseDays.js"></script>
+    <script src="/Scripts/Lexicon/factories/CourseTemplates.js"></script>
+    <script src="/Scripts/Lexicon/factories/CurrentUser.js"></script>
+    <script src="/Scripts/Lexicon/factories/Documents.js"></script>
+    <script src="/Scripts/Lexicon/factories/Messages.js"></script>
+    <script src="/Scripts/Lexicon/factories/News.js"></script>
+    <script src="/Scripts/Lexicon/factories/Password.js"></script>
+    <script src="/Scripts/Lexicon/factories/Redirect.js"></script>
+    <script src="/Scripts/Lexicon/factories/Roles.js"></script>
+    <script src="/Scripts/Lexicon/factories/Token.js"></script>
+    <script src="/Scripts/Lexicon/factories/Users.js"></script>
+
+
     <link rel="import" href="bundle-teacher.html" />
 
-
-    <!--<script src="/Scripts/angular.js"></script>
-    <script src="/Scripts/angular-route.min.js"></script>
-    <script src="/Scripts/Lexicon/modules/modules.js"></script>-->
-
-
-    <script src="/Scripts/jquery-3.1.1.min.js"></script>
-    <script src="/Scripts/bootstrap.min.js"></script>
-    <script src="/Scripts/Lexicon/routing/Teacher.js"></script>
-
-
-    <!--<script src="/Scripts/Lexicon/directives/bsActiveLink.js"></script>
     <script src="/Scripts/Lexicon/controllers/teacher/ErrorController.js"></script>
     <script src="/Scripts/Lexicon/controllers/teacher/Controller.js"></script>
     <script src="/Scripts/Lexicon/controllers/teacher/ChangePassword.js"></script>
+    <script src="/Scripts/Lexicon/controllers/teacher/coursedays/DetailsController.js"></script>
+    <script src="/Scripts/Lexicon/controllers/teacher/coursedays/UploadController.js"></script>
     <script src="/Scripts/Lexicon/controllers/teacher/messages/Controller.js"></script>
     <script src="/Scripts/Lexicon/controllers/teacher/messages/CreateController.js"></script>
     <script src="/Scripts/Lexicon/controllers/teacher/messages/ReplyController.js"></script>
@@ -35,18 +48,19 @@
     <script src="/Scripts/Lexicon/controllers/teacher/news/CreateController.js"></script>
     <script src="/Scripts/Lexicon/controllers/teacher/news/DetailsController.js"></script>
     <script src="/Scripts/Lexicon/controllers/teacher/news/EditController.js"></script>
+    <script src="/Scripts/Lexicon/controllers/teacher/templates/Controller.js"></script>
+    <script src="/Scripts/Lexicon/controllers/teacher/templates/CreateController.js"></script>
+    <script src="/Scripts/Lexicon/controllers/teacher/templates/DetailsController.js"></script>
+    <script src="/Scripts/Lexicon/controllers/teacher/templates/EditController.js"></script>
     <script src="/Scripts/Lexicon/controllers/teacher/students/Controller.js"></script>
     <script src="/Scripts/Lexicon/controllers/teacher/students/RegisterController.js"></script>
     <script src="/Scripts/Lexicon/controllers/teacher/students/DetailsController.js"></script>
     <script src="/Scripts/Lexicon/controllers/teacher/students/EditController.js"></script>
-    <script src="/Scripts/Lexicon/factories/CurrentUser.js"></script>
-    <script src="/Scripts/Lexicon/factories/Messages.js"></script>
-    <script src="/Scripts/Lexicon/factories/News.js"></script>
-    <script src="/Scripts/Lexicon/factories/Password.js"></script>
-    <script src="/Scripts/Lexicon/factories/Redirect.js"></script>
-    <script src="/Scripts/Lexicon/factories/Roles.js"></script>
-    <script src="/Scripts/Lexicon/factories/Token.js"></script>
-    <script src="/Scripts/Lexicon/factories/Users.js"></script>-->
+
+
+    <script src="/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/Lexicon/routing/Teacher.js"></script>
 </head>
 <body ng-app="teacher" ng-controller="Controller" ng-init="GetCurrentUser()">
     <div class="navbar navbar-inverse navbar-fixed-top">

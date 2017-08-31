@@ -545,6 +545,7 @@
     <Content Include="Scripts\Lexicon\controllers\student\news\EditController.js" />
     <Content Include="Scripts\Lexicon\controllers\teacher\Controller.js" />
     <Content Include="Scripts\Lexicon\controllers\teacher\coursedays\DetailsController.js" />
+    <Content Include="Scripts\Lexicon\controllers\teacher\coursedays\UploadController.js" />
     <Content Include="Scripts\Lexicon\controllers\teacher\ErrorController.js" />
     <Content Include="Scripts\Lexicon\controllers\teacher\messages\Controller.js" />
     <Content Include="Scripts\Lexicon\controllers\teacher\messages\CreateController.js" />
@@ -598,7 +599,6 @@
     <Content Include="Lexicon\templates\templates\details.html" />
     <Content Include="Lexicon\templates\templates\edit.html" />
     <Content Include="Lexicon\templates\templates\index.html" />
-    <Content Include="Lexicon\templates\documents\index.html" />
     <Content Include="Lexicon\templates\documents\upload.html" />
     <Content Include="Lexicon\templates\feedbacks\create.html" />
     <Content Include="Lexicon\templates\feedbacks\details.html" />
@@ -658,7 +658,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Uploads\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>

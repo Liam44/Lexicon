@@ -7,14 +7,12 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.Description;
 
 namespace SinglePageWebApplication.Controllers
 {
@@ -22,6 +20,8 @@ namespace SinglePageWebApplication.Controllers
     public class DocumentsController : ApiController
     {
         private DocumentsRepository repository = new DocumentsRepository();
+
+        private readonly string workingFolder = HttpRuntime.AppDomainAppPath + @"\Uploads";
 
         public List<EnumDocumentClassesVM> GetDocumentClasses()
         {
@@ -35,125 +35,10 @@ namespace SinglePageWebApplication.Controllers
             return result;
         }
 
-        // GET: api/Document/5
-        [ResponseType(typeof(PartialDocumentVM))]
-        public async Task<IHttpActionResult> GetDocument(int id)
-        {
-            Document document = await repository.Document(id);
-            if (document == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(new PartialDocumentVM
-            {
-                ID = document.ID,
-                Name = document.Name,
-                CourseID = document.CourseID,
-                CourseDayID = document.CourseDayID,
-                CoursePartID = document.CoursePartID,
-                AssignmentID = document.AssignmentID
-            });
-        }
-
-        // POST: api/Documents
-        public HttpResponseMessage Post()
-        {
-            HttpResponseMessage result = null;
-            var httpRequest = HttpContext.Current.Request;
-            if (httpRequest.Files.Count > 0)
-            {
-                var docfiles = new List<string>();
-                foreach (string file in httpRequest.Files)
-                {
-                    var postedFile = httpRequest.Files[file];
-                    var filePath = HttpContext.Current.Server.MapPath("~/" + postedFile.FileName);
-                    postedFile.SaveAs(filePath);
-
-                    docfiles.Add(filePath);
-                }
-                result = Request.CreateResponse(HttpStatusCode.Created, docfiles);
-            }
-            else
-            {
-                result = Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
-            return result;
-        }
-
-        [HttpGet]
-        public HttpResponseMessage DownLoadFile(string FileName, string fileType)
-        {
-            Byte[] bytes = null;
-            if (FileName != null)
-            {
-                string filePath = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache), FileName));
-                FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-                BinaryReader br = new BinaryReader(fs);
-                bytes = br.ReadBytes((Int32)fs.Length);
-                br.Close();
-                fs.Close();
-            }
-
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-            System.IO.MemoryStream stream = new MemoryStream(bytes);
-            result.Content = new StreamContent(stream);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue(fileType);
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-            {
-                FileName = FileName
-            };
-            return (result);
-        }
-
-        // DELETE: api/Document/5
-        [ResponseType(typeof(Document))]
-        public async Task<IHttpActionResult> DeleteDocument(int id)
-        {
-            Document document = await repository.Document(id);
-            if (document == null)
-            {
-                return NotFound();
-            }
-
-            await repository.Delete(document);
-
-            return Ok(document);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                repository.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private readonly string workingFolder = HttpRuntime.AppDomainAppPath + @"\Uploads";
-
         /// <summary>
-        ///   Get all photos
+        /// Delete a document
         /// </summary>
-        /// <returns></returns>
-        public async Task<IHttpActionResult> Get()
-        {
-            var documents = new List<PartialDocumentVM>();
-
-            var photoFolder = new DirectoryInfo(workingFolder);
-
-            await Task.Factory.StartNew(() =>
-            {
-                documents = PartialDocuments(repository.Documents());
-            });
-
-            return Ok(new { Documents = documents });
-        }
-
-        /// <summary>
-        ///   Delete photo
-        /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Document ID</param>
         /// <returns></returns>
         [HttpDelete]
         public async Task<IHttpActionResult> Delete(int id)
@@ -188,7 +73,7 @@ namespace SinglePageWebApplication.Controllers
         }
 
         /// <summary>
-        ///   Add a photo
+        /// Uploads a document
         /// </summary>
         /// <returns></returns>
         public async Task<IHttpActionResult> Upload()
@@ -200,11 +85,9 @@ namespace SinglePageWebApplication.Controllers
             }
             try
             {
+                // Copies the uploaded files to the "Uploads" repository in the project
                 var provider = new CustomMultipartFormDataStreamProvider(workingFolder);
-                //await Request.Content.ReadAsMultipartAsync(provider);
                 await Task.Run(async () => await Request.Content.ReadAsMultipartAsync(provider));
-
-                var documents = new List<Document>();
 
                 foreach (var file in provider.FileData)
                 {
@@ -216,7 +99,10 @@ namespace SinglePageWebApplication.Controllers
                         UploadingDate = DateTime.Now,
                         UploaderID = User.Identity.GetUserId(),
                         Class = (DocumentClass)(int.Parse(provider.FormData["DocumentClass"])),
+                        ContentType = MimeMapping.GetMimeMapping(file.LocalFileName)
                     };
+
+                    fileInfo.Delete();
 
                     string strCourseId = provider.FormData["CourseID"];
 
@@ -246,13 +132,11 @@ namespace SinglePageWebApplication.Controllers
                         document.AssignmentID = int.Parse(strAssignmentId);
                     }
 
+                    document.Content = File.ReadAllBytes(file.LocalFileName);
+
                     await repository.Add(document);
-
-                    documents.Add(document);
-
-                    fileInfo.Delete();
                 }
-                return Ok(new { Message = "Documents uploaded ok", Documents = PartialDocuments(documents) });
+                return Ok(new { Message = "Documents uploaded ok" });
             }
             catch (Exception ex)
             {
@@ -260,19 +144,37 @@ namespace SinglePageWebApplication.Controllers
             }
         }
 
-        private List<PartialDocumentVM> PartialDocuments(IEnumerable<Document> documents)
+        [HttpGet]
+        public async Task<HttpResponseMessage> Download(int fileID)
         {
-            return documents.Select(d => new PartialDocumentVM
+            //Get file object here
+            try
             {
-                ID = d.ID,
-                CourseID = d.CourseID,
-                CourseDayID = d.CourseDayID,
-                CoursePartID = d.CoursePartID,
-                AssignmentID = d.AssignmentID,
-                Name = d.Name,
-                Uploaded = d.UploadingDate.ToString(),
-                DocumentClass = d.Class.ToString()
-            }).ToList();
+                var fetchFile = await repository.Document(fileID);
+
+                HttpResponseMessage httpResponseMessage = new HttpResponseMessage();
+                httpResponseMessage.Content = new ByteArrayContent(fetchFile.Content);
+                httpResponseMessage.Content.Headers.Add("x-filename", fetchFile.Name);
+                httpResponseMessage.Content.Headers.ContentType = new MediaTypeHeaderValue(fetchFile.ContentType);
+                httpResponseMessage.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                httpResponseMessage.Content.Headers.ContentDisposition.FileName = fetchFile.Name;
+                httpResponseMessage.StatusCode = HttpStatusCode.OK;
+
+                return httpResponseMessage;
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e);
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                repository.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

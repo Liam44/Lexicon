@@ -39,8 +39,8 @@
                     <td>{{doc.Uploaded}}</td>
                     <td>{{doc.UploadedBy}}</td>
                     <td>
-                        <a href="#!/Documents/Download/{{doc.ID}}">Download</a> |
-                        <a href="javascript:void(0)" ng-click="DeleteDocument(doc.Name, doc.ID)">Delete</a>
+                        <a href="javascript:void(0)" data-localize="DOWNLOAD" ng-click="Download(doc.ID)">Download</a> |
+                        <a href="javascript:void(0)" ng-click="Delete(doc.Name, doc.ID)">Delete</a>
                     </td>
                 </tr>
             </tbody>

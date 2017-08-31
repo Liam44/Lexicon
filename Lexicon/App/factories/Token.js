@@ -8,10 +8,6 @@
                $window.sessionStorage.setItem(tokenKey, accessToken);
            }
 
-           thisTokenService.GetAuthorizationToken = function () {
-               return 'Bearer ' + $window.sessionStorage.getItem(tokenKey);
-           }
-
            thisTokenService.GetToken = function () {
                var token = $window.sessionStorage.getItem(tokenKey);
                var headers = {};

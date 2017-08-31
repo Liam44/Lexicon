@@ -13,13 +13,13 @@ angular.module('token', []);
 angular.module('password', ['token']);
 
 // Allows to get informations about the currently logged in user
-angular.module('currentuser', ['token', 'redirect']);
+angular.module('currentuser', ['redirect', 'token']);
 
 // Allows the user to log out
-angular.module('logout', ['token', 'redirect', 'ngRoute']);
+angular.module('logout', ['redirect', 'token', 'ngRoute']);
 
 // Allows the user to log in
-angular.module('login', ['token', 'currentuser', 'redirect']);
+angular.module('login', ['currentuser', 'redirect', 'token']);
 
 // Manages all actions allowed on news
 angular.module('news', ['token']);
@@ -40,46 +40,48 @@ angular.module('templates', ['token']);
 angular.module('documents', ['token', 'ngFileUpload']);
 
 // Manages all actions allowed on courses
-angular.module('courses', ['token', 'coursetemplates']);
+angular.module('courses', ['coursetemplates', 'token']);
 
 // Manages all actions allowed on course days
-angular.module('coursedays', ['token', 'redirect', 'documents']);
+angular.module('coursedays', ['documents', 'redirect', 'token']);
 
 // Manages all actions allowed on course parts
 angular.module('courseparts', ['token']);
 
 // Manages all actions allowed to the admin role
 angular.module('admin', ['bsActiveLink',
-    'token',
+    'coursedays',
     'currentuser',
-    'redirect',
-    'users',
-    'roles',
-    'password',
     'messages',
     'news',
+    'password',
+    'redirect',
+    'roles',
     'templates',
-    'coursedays',
+    'token',
+    'users',
     'ngRoute']);
 
 // Manages all actions allowed to the student role
 angular.module('student', ['bsActiveLink',
-    'token',
     'currentuser',
-    'redirect',
-    'password',
     'messages',
     'news',
+    'password',
+    'redirect',
+    'token',
     'ngRoute']);
 
 // Manages all actions allowed to the teacher role
 angular.module('teacher', ['bsActiveLink',
-    'token',
+    'coursedays',
     'currentuser',
-    'redirect',
-    'users',
-    'roles',
-    'password',
     'messages',
     'news',
+    'password',
+    'redirect',
+    'roles',
+    'templates',
+    'token',
+    'users',
     'ngRoute']);
