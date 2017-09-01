@@ -54,7 +54,7 @@ namespace SinglePageWebApplication.Controllers
             {
                 await repository.Delete(document);
 
-                var result = new PhotoActionResult
+                var result = new DocumentActionResult
                 {
                     Successful = true,
                     Message = document.Name + " deleted successfully"
@@ -63,7 +63,7 @@ namespace SinglePageWebApplication.Controllers
             }
             catch (Exception ex)
             {
-                var result = new PhotoActionResult
+                var result = new DocumentActionResult
                 {
                     Successful = false,
                     Message = "error deleting fileName " + ex.GetBaseException().Message

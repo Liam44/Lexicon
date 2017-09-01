@@ -1,0 +1,105 @@
+﻿<h1>{{Title}}</h1>
+<a href="#!/{{LinkHref}}/Register" title="{{LinkTitle}}">{{LinkText}}</a>
+<table class="table table-striped table-responsive vertical-centered">
+    <thead>
+        <tr>
+            <th>
+                <input type="text"
+                       class="round-in-table"
+                       name="Search"
+                       ng-model="searchTerm.Username"
+                       placeholder="Free Search">
+                <p class="p-sort" ng-click="orderBy('Username')">
+                    Username
+                </p>
+            </th>
+            <th>
+                <input type="text"
+                       class="round-in-table"
+                       name="Search"
+                       ng-model="searchTerm.FirstName"
+                       placeholder="Free Search">
+                <p class="p-sort" ng-click="orderBy('FirstName')">
+                    First Name
+                </p>
+            </th>
+            <th>
+                <input type="text"
+                       class="round-in-table"
+                       name="Search"
+                       ng-model="searchTerm.LastName"
+                       placeholder="Free Search">
+                <p class="p-sort" ng-click="orderBy('LastName+FirstName')">
+                    Last Name
+                </p>
+            </th>
+            <th>
+                <input type="text"
+                       class="round-in-table"
+                       name="Search"
+                       ng-model="searchTerm.AFId"
+                       placeholder="Free Search">
+                <p class="p-sort" ng-click="orderBy('AFId')">
+                    AF ID
+                </p>
+            </th>
+            <th>
+                <input type="text"
+                       class="round-in-table"
+                       name="Search"
+                       ng-model="searchTerm.Email"
+                       placeholder="Free Search">
+                <p class="p-sort" ng-click="orderBy('Email')">
+                    Email Address
+                </p>
+            </th>
+            <th>
+                <input type="text"
+                       class="round-in-table"
+                       name="Search"
+                       ng-model="searchTerm.PhoneNumber"
+                       placeholder="Free Search">
+                <p class="p-sort" ng-click="orderBy('PhoneNumber')">
+                    Phone Number
+                </p>
+            </th>
+            <th>
+                <input type="text"
+                       class="round-in-table"
+                       name="Search"
+                       ng-model="searchTerm.RoleName"
+                       placeholder="Free Search">
+                <p class="p-sort" ng-click="orderBy('RoleName')">
+                    Role
+                </p>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="u in Users | orderBy:propertyName:reverse | filter:searchTerm">
+            <td>{{u.Username}}</td>
+            <td>{{u.FirstName}}</td>
+            <td>{{u.LastName}}</td>
+            <td>{{u.AFId}}</td>
+            <td>{{u.Email}}</td>
+            <td>{{u.PhoneNumber}}</td>
+            <td>{{u.RoleName}}</td>
+            <td>
+                <p class="href"><a href="#!/{{LinkHref}}/Edit/{{u.Id}}">Edit</a></p>
+                <p class="href"><a href="#!/{{LinkHref}}/Details/{{u.Id}}">Details</a></p>
+                <p class="href">
+                    <a href="javascript:void(0)" ng-click="ResetPassword(u.FirstName + ' ' + u.LastName, u.Id)">Reset password</a>
+                </p>
+                <p class="href" ng-show="u.IsDeletable">
+                    <a href="javascript:void(0)" ng-click="Delete(u.FirstName + ' ' + u.LastName, u.Id)">Delete</a>
+                </p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="text-info" style="font-weight:bolder">
+    <p>{{ResetPasswordError}}</p>
+    <p>{{DeleteError}}</p>
+</div>

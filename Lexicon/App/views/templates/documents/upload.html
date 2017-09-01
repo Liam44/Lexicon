@@ -1,0 +1,61 @@
+﻿<h1>{{Title}}</h1>
+
+<hr />
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <div class="form-group">
+            <label class="control-label col-md-2" for="documentClass">Select a document class:</label>
+            <div class="col-md-10">
+                <select class="form-control"
+                        id="documentClass"
+                        ng-options="class.Key as class.Value for class in classes"
+                        ng-model="documentClass"
+                        ng-init="documentClass = documentClass || classes[0].Value"
+                        autofocus="autofocus"
+                        required></select>
+            </div>
+        </div>
+
+        <form name="newDocumentsForm" role="form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="control-label col-md-2" for="newDocuments">Select and upload new documents</label>
+                <div class="col-md-10">
+                    <input type="file" id="newDocuments" class="uploadFile" ngf-select ng-model="files" ngf-multiple="true">
+                </div>
+            </div>
+
+            <div class="form-group">
+                    <ul class="list-unstyled col-md-2" ng-model="files">
+                        <li>
+                            <strong>Files:</strong>
+                        </li>
+                        <li ng-repeat="document in files">{{document.name}}</li>
+                    </ul>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <button class="btn btn-default" type="button" ng-click="uploadFiles(files)">Upload</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <hr />
+
+    <div class="form-group" ng-show="CourseID">
+        <a href="#!/Courses/Details/{{CourseID}}">Back to the course</a>
+    </div>
+
+    <div class="form-group" ng-show="CourseDayID">
+        <a href="#!/CourseDays/Details/{{CourseDayID}}">Back to the course day</a>
+    </div>
+
+    <div class="form-group" ng-show="CoursePartID">
+        <a href="#!/CourseParts/Details/{{CoursePartID}}">Back to the course part</a>
+    </div>
+
+    <div class="form-group" ng-show="AssignmentID">
+        <a href="#!/Assignments/Details/{{AssignmentID}}">Back to the assignment</a>
+    </div>
+</div>

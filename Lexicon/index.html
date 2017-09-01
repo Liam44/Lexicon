@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Lexicon - Helper System</title>
+
+    <link rel="stylesheet" href="/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="/Content/Site.css" />
+
+    <script src="/Scripts/angular.min.js"></script>
+    <script src="/Scripts/angular-route.min.js"></script>
+    <script src="App/scripts/modules/modules.js"></script>
+
+    <script src="App/scripts/factories/redirect.js"></script>
+    <script src="App/scripts/factories/Token.js"></script>
+    <script src="App/scripts/factories/currentuser.js"></script>
+    <script src="App/scripts/controllers/login.js"></script>
+    <script src="App/scripts/routing/Login.js"></script>
+
+    <script src="/Scripts/jquery-3.1.1.js"></script>
+
+    <script src="/Scripts/bootstrap.js"></script>
+    <script src="/Scripts/respond.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+    </div>
+    <div class="container body-content">
+        <div class="jumbotron">
+            <h1>Log In</h1>
+        </div>
+
+        <div class="row" ng-app="login" ng-controller="LoginController">
+            <div ng-view>
+            </div>
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Lexicon - Helper System</p>
+        </footer>
+    </div>
+</body>
+</html>
