@@ -13,8 +13,8 @@ namespace Lexicon.ViewModels
         public int? CourseID { get; set; }
         public string CourseName { get; set; }
 
-        public PartialCoursePartVM Morning { get; set; }
-        public PartialCoursePartVM Afternoon { get; set; }
+        public int MorningID { get; set; }
+        public int AfternoonID { get; set; }
 
         public IEnumerable<PartialDocumentVM> Documents { get; set; }
     }

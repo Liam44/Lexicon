@@ -9,8 +9,14 @@ namespace Lexicon.ViewModels
         public string PartDay { get; set; }
         public string CodeAlong_Lecture { get; set; }
 
-        public List<Document> Files { get; set; }
-        public List<Link> Pluralsight { get; set; }
-        public List<TeachersAssignment> Assignments { get; set; }
+        public int CourseDayID { get; set; }
+        public string CourseDayName { get; set; }
+
+        public string CourseName { get; set; }
+
+        public string CourseTemplateName { get; set; }
+
+        public List<PartialDocumentVM> Files { get; set; }
+        public List<PartialLinkVM> Pluralsight { get; set; }
     }
 }

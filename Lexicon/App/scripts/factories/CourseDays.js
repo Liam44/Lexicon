@@ -69,5 +69,19 @@ angular.module('coursedays')
                return promise;
            };
 
+           thisCourseDayService.CreateTitle = function (cd) {
+               var title = '';
+               if (cd.CourseTemplateName !== undefined) {
+                   title += ' - \'' + cd.CourseTemplateName;
+               }
+               else if (cd.CourseName !== undefined) {
+                   title += ' - \'' + cd.CourseName;
+               }
+
+               title += '\' - DAY ' + cd.DayNumber;
+
+               return title;
+           };
+
            return thisCourseDayService;
        }]);

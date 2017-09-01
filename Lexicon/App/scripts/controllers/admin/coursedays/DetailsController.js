@@ -12,14 +12,8 @@ angular.module('admin')
 
             function GetCourseDay() {
                 CourseDaysService.GetSingle($routeParams.id).then(function (cd) {
-                    if (cd.CourseTemplateName !== undefined) {
-                        $scope.Title += ' - \'' + cd.CourseTemplateName;
-                    }
-                    else if (cd.CourseName !== undefined) {
-                        $scope.Title += ' - \'' + cd.CourseName;
-                    }
+                    $scope.Title += CourseDaysService.CreateTitle(cd);
 
-                    $scope.Title += '\' - Day ' + cd.DayNumber;
                     $scope.CourseDay = cd;
 
                     $rootScope.loading = false;
@@ -72,12 +66,21 @@ angular.module('admin')
                 }
             }
 
-            $scope.propertyName = 'Name';
-            $scope.reverse = false;
-            $scope.orderBy = orderBy;
+            $scope.documentPropertyName = 'Name';
+            $scope.documentReverse = false;
+            $scope.orderDocumentsBy = orderDocumentsBy;
 
-            function orderBy(propertyName) {
-                $scope.reverse = $scope.propertyName === propertyName ? !$scope.reverse : false;
-                $scope.propertyName = propertyName;
+            function orderDocumentsBy(propertyName) {
+                $scope.documentReverse = $scope.documentPropertyName === propertyName ? !$scope.documentReverse : false;
+                $scope.documentPropertyName = propertyName;
+            }
+
+            $scope.attendancePropertyName = 'LastName+FirstName';
+            $scope.attendanceReverse = false;
+            $scope.orderAttendancesBy = orderAttendancesBy;
+
+            function orderAttendancesBy(propertyName) {
+                $scope.attendanceReverse = $scope.attendancePropertyName === propertyName ? !$scope.attendanceReverse : false;
+                $scope.attendancePropertyName = propertyName;
             }
         }]);

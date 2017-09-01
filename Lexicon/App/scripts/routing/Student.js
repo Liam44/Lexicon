@@ -16,42 +16,42 @@ angular.module('student')
             })
             .when('/Courses',
             {
-                templateUrl: '/App/Views/templates/Courses/index.html',
+                templateUrl: '/App/Views/Courses/index.html',
                 controller: 'CoursesController'
             })
             .when('/Messages',
             {
-                templateUrl: '/App/Views/templates/Messages/index.html',
+                templateUrl: '/App/Views/Messages/index.html',
                 controller: 'MessagesController'
             })
             .when('/Messages/Read/:id',
             {
-                templateUrl: '/App/Views/templates/Messages/read.html',
+                templateUrl: '/App/Views/Messages/read.html',
                 controller: 'MessagesReadController'
             })
             .when('/Messages/Write',
             {
-                templateUrl: '/App/Views/templates/Messages/write.html',
+                templateUrl: '/App/Views/Messages/write.html',
                 controller: 'MessagesWriteController'
             })
             .when('/Messages/Reply/:id',
             {
-                templateUrl: '/App/Views/templates/Messages/reply.html',
+                templateUrl: '/App/Views/Messages/reply.html',
                 controller: 'MessagesReplyController'
             })
             .when('/Messages/History/:id',
             {
-                templateUrl: '/App/Views/templates/Messages/history.html',
+                templateUrl: '/App/Views/Messages/history.html',
                 controller: 'MessagesHistoryController'
             })
             .when('/News',
             {
-                templateUrl: '/App/Views/templates/News/index.html',
+                templateUrl: '/App/Views/News/index.html',
                 controller: 'NewsController'
             })
             .when('/News/Details/:id',
             {
-                templateUrl: '/App/Views/templates/News/details.html',
+                templateUrl: '/App/Views/News/details.html',
                 controller: 'NewsDetailsController'
             })
             .otherwise({

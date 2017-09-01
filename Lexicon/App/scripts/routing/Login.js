@@ -6,7 +6,7 @@ angular.module('login')
         $routeProvider
             .when('/',
             {
-                templateUrl: '/App/Views/Templates/Login/login.html',
+                templateUrl: '/App/Views/Login/login.html',
                 controller: 'LoginController'
             })
             .otherwise({

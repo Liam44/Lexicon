@@ -10,22 +10,22 @@
             <thead>
                 <tr>
                     <th>
-                        <p class="p-sort" ng-click="orderBy('Name')">
+                        <p class="p-sort" ng-click="orderDocumentsBy('Name')">
                             Name
                         </p>
                     </th>
                     <th>
-                        <p class="p-sort" ng-click="orderBy('DocumentClass')">
+                        <p class="p-sort" ng-click="orderDocumentsBy('DocumentClass')">
                             Document Class
                         </p>
                     </th>
                     <th>
-                        <p class="p-sort" ng-click="orderBy('UploadingDate')">
+                        <p class="p-sort" ng-click="orderDocumentsBy('UploadingDate')">
                             Uploaded
                         </p>
                     </th>
                     <th>
-                        <p class="p-sort" ng-click="orderBy('UploadedBy')">
+                        <p class="p-sort" ng-click="orderDocumentsBy('UploadedBy')">
                             By
                         </p>
                     </th>
@@ -33,13 +33,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="doc in CourseDay.Documents | orderBy:propertyName:reverse">
-                    <td>{{doc.Name}}</td>
+                <tr ng-repeat="doc in CourseDay.Documents | orderBy:documentPropertyName:documentReverse">
+                    <td><a href="javascript:void(0)" data-localize="DOWNLOAD" ng-click="Download(doc.ID)">{{doc.Name}}</a></td>
                     <td>{{doc.DocumentClass}}</td>
                     <td>{{doc.Uploaded}}</td>
                     <td>{{doc.UploadedBy}}</td>
                     <td>
-                        <a href="javascript:void(0)" data-localize="DOWNLOAD" ng-click="Download(doc.ID)">Download</a> |
                         <a href="javascript:void(0)" ng-click="Delete(doc.Name, doc.ID)">Delete</a>
                     </td>
                 </tr>
@@ -48,44 +47,6 @@
     </div>
     <div class="form-group">
         <a class="btn btn-default" href="#!/CourseDays/Upload/{{CourseDay.ID}}">Upload a new document</a>
-    </div>
-</div>
-
-<hr />
-
-<h2>Pluralsight Links</h2>
-
-<div class="form-horizontal">
-    <div class="form-group">
-        <table class="table table-striped table-responsive vertical-centered">
-            <thead>
-                <tr>
-                    <th>
-                        <p class="p-sort" ng-click="orderBy('HttpLink')">
-                            URL
-                        </p>
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="link in CourseDay.Links | orderBy:propertyName:reverse">
-                    <td>
-                        <a href="{{link.HttpLink}}">{{link.HttpLink}}</a>
-                        <div class="pluralsight-link">
-                            <iframe src="{{link.HttpLink}}" style="width:500px;height:500px"></iframe>
-                        </div>
-                    </td>
-                    <td>
-                        <a href="javascript:void(0)" ng-click="DeleteLink(link.HttpLink, link.ID)">Delete</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="form-group">
-        <button type="button" ng-click="AddLink(CourseDay.ID)">Add a new link</button>
     </div>
 </div>
 
@@ -100,29 +61,29 @@
                 <thead>
                     <tr>
                         <th>
-                            <p class="p-sort" ng-click="orderBy('FirstName')">
+                            <p class="p-sort" ng-click="orderAttendancesBy('FirstName')">
                                 First Name
                             </p>
                         </th>
                         <th>
-                            <p class="p-sort" ng-click="orderBy('LastName')">
+                            <p class="p-sort" ng-click="orderAttendancesBy('LastName')">
                                 Last Name
                             </p>
                         </th>
                         <th>
-                            <p class="p-sort" ng-click="orderBy('AFID')">
+                            <p class="p-sort" ng-click="orderAttendancesBy('AFID')">
                                 AF ID
                             </p>
                         </th>
                         <th>
-                            <p class="p-sort" ng-click="orderBy('Present')">
+                            <p class="p-sort" ng-click="orderAttendancesBy('Present')">
                                 Present
                             </p>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="attendance in CourseDay.Attendances | orderBy:propertyName:reverse">
+                    <tr ng-repeat="attendance in CourseDay.Attendances | orderBy:attendancePropertyName:attendanceReverse">
                         <td>{{attendance.Student.FirstName}}</td>
                         <td>{{attendance.Student.LastName}}</td>
                         <td>{{attendance.Student.AFId}}</td>
@@ -138,9 +99,11 @@
     </div>
 </div>
 
+<hr />
+
 <div class="form-group">
-    <button>See morning details</button>
-    <button>See afternoon details</button>
+    <a class="btn btn-default" href="#!/CourseParts/Details/{{CourseDay.MorningID}}">See morning details</a>
+    <a class="btn btn-default" href="#!/CourseParts/Details/{{CourseDay.AfternoonID}}">See afternoon details</a>
 </div>
 
 <div class="form-group" ng-show="CourseDay.CourseTemplateID">

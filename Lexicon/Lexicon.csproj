@@ -205,6 +205,7 @@
     <Compile Include="Controllers\CourseDaysController.cs" />
     <Compile Include="Controllers\CoursePartsController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\LinksController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -223,6 +224,10 @@
     <Compile Include="Migrations\201708290911233_CoursePart.cs" />
     <Compile Include="Migrations\201708290911233_CoursePart.Designer.cs">
       <DependentUpon>201708290911233_CoursePart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709010759484_Links.cs" />
+    <Compile Include="Migrations\201709010759484_Links.Designer.cs">
+      <DependentUpon>201709010759484_Links.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -266,6 +271,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\DeleteCourseDayVM.cs" />
     <Compile Include="ViewModels\EnumDocumentClassesVM.cs" />
+    <Compile Include="ViewModels\PartialLinkVM.cs" />
     <Compile Include="ViewModels\PartialDocumentVM.cs" />
     <Compile Include="ViewModels\PartialCoursePartVM.cs" />
     <Compile Include="ViewModels\PartialCourseDayVM.cs" />
@@ -279,7 +285,22 @@
     <Content Include="admin\bundle-factories.html" />
     <Content Include="admin\home.html" />
     <Content Include="admin\index.html" />
-    <Content Include="App\views\bundle-angular.html" />
+    <Content Include="App\scripts\controllers\admin\courseparts\AddLinkController.js" />
+    <Content Include="App\scripts\controllers\admin\courseparts\DetailsController.js" />
+    <Content Include="App\scripts\controllers\admin\courseparts\EditController.js" />
+    <Content Include="App\scripts\controllers\admin\courseparts\UploadController.js" />
+    <Content Include="App\scripts\controllers\admin\coursedays\AddLinkController.js" />
+    <Content Include="App\scripts\controllers\admin\links\EditController.js" />
+    <Content Include="App\scripts\controllers\teacher\coursedays\AddLinkController.js" />
+    <Content Include="App\scripts\controllers\teacher\courseparts\AddLinkController.js" />
+    <Content Include="App\scripts\controllers\teacher\courseparts\DetailsController.js" />
+    <Content Include="App\scripts\controllers\teacher\courseparts\EditController.js" />
+    <Content Include="App\scripts\controllers\teacher\courseparts\UploadController.js" />
+    <Content Include="App\scripts\controllers\teacher\links\EditController.js" />
+    <Content Include="App\scripts\factories\Assignments.js" />
+    <Content Include="App\scripts\factories\Courses.js" />
+    <Content Include="App\scripts\factories\Links.js" />
+    <Content Include="App\bundle-angular.html" />
     <Content Include="App\views\changepassword.html" />
     <Content Include="App\scripts\controllers\admin\ChangePassword.js" />
     <Content Include="App\scripts\controllers\admin\Controller.js" />
@@ -355,7 +376,7 @@
     <Content Include="App\scripts\factories\Roles.js" />
     <Content Include="App\scripts\factories\Token.js" />
     <Content Include="App\scripts\factories\Users.js" />
-    <Content Include="App\views\login\login.html" />
+    <Content Include="App\views\courseparts\edit.html" />
     <Content Include="App\views\redirectError.html" />
     <Content Include="App\views\logout\index.html" />
     <Content Include="App\views\logout\logout.html" />
@@ -365,6 +386,8 @@
     <Content Include="App\scripts\routing\Logout.js" />
     <Content Include="App\scripts\routing\Student.js" />
     <Content Include="App\scripts\routing\Teacher.js" />
+    <Content Include="App\views\links\edit.html" />
+    <Content Include="App\views\links\add.html" />
     <Content Include="student\bundle-factories.html" />
     <Content Include="student\bundle-student.html" />
     <Content Include="student\home.html" />
@@ -373,54 +396,54 @@
     <Content Include="teacher\bundle-teacher.html" />
     <Content Include="teacher\home.html" />
     <Content Include="teacher\index.html" />
-    <Content Include="App\views\templates\attendances\details.html" />
-    <Content Include="App\views\templates\attendances\edit.html" />
-    <Content Include="App\views\templates\attendances\export.html" />
-    <Content Include="App\views\templates\attendances\index.html" />
-    <Content Include="App\views\templates\attendances\report.html" />
-    <Content Include="App\views\templates\coursedays\details.html" />
-    <Content Include="App\views\templates\courseparts\details.html" />
-    <Content Include="App\views\templates\courses\add.html" />
-    <Content Include="App\views\templates\courses\delete.html" />
-    <Content Include="App\views\templates\courses\details.html" />
-    <Content Include="App\views\templates\courses\edit.html" />
-    <Content Include="App\views\templates\courses\index.html" />
-    <Content Include="App\views\templates\documents\upload.html" />
-    <Content Include="App\views\templates\feedbacks\create.html" />
-    <Content Include="App\views\templates\feedbacks\details.html" />
-    <Content Include="App\views\templates\feedbacks\edit.html" />
-    <Content Include="App\views\templates\internships\details.html" />
-    <Content Include="App\views\templates\internships\edit.html" />
-    <Content Include="App\views\templates\internships\index.html" />
-    <Content Include="App\views\templates\login\login.html" />
-    <Content Include="App\views\templates\login\redirectError.html" />
-    <Content Include="App\views\templates\messages\history.html" />
-    <Content Include="App\views\templates\messages\index.html" />
-    <Content Include="App\views\templates\messages\read.html" />
-    <Content Include="App\views\templates\messages\reply.html" />
-    <Content Include="App\views\templates\messages\write.html" />
-    <Content Include="App\views\templates\news\create.html" />
-    <Content Include="App\views\templates\news\details.html" />
-    <Content Include="App\views\templates\news\edit.html" />
-    <Content Include="App\views\templates\news\index.html" />
-    <Content Include="App\views\templates\studentsassignments\add.html" />
-    <Content Include="App\views\templates\studentsassignments\delete.html" />
-    <Content Include="App\views\templates\studentsassignments\details.html" />
-    <Content Include="App\views\templates\studentsassignments\edit.html" />
-    <Content Include="App\views\templates\studentsassignments\index.html" />
-    <Content Include="App\views\templates\teachersassignments\add.html" />
-    <Content Include="App\views\templates\teachersassignments\delete.html" />
-    <Content Include="App\views\templates\teachersassignments\details.html" />
-    <Content Include="App\views\templates\teachersassignments\edit.html" />
-    <Content Include="App\views\templates\teachersassignments\index.html" />
-    <Content Include="App\views\templates\templates\create.html" />
-    <Content Include="App\views\templates\templates\details.html" />
-    <Content Include="App\views\templates\templates\edit.html" />
-    <Content Include="App\views\templates\templates\index.html" />
-    <Content Include="App\views\templates\users\details.html" />
-    <Content Include="App\views\templates\users\edit.html" />
-    <Content Include="App\views\templates\users\index.html" />
-    <Content Include="App\views\templates\users\register.html" />
+    <Content Include="App\views\attendances\details.html" />
+    <Content Include="App\views\attendances\edit.html" />
+    <Content Include="App\views\attendances\export.html" />
+    <Content Include="App\views\attendances\index.html" />
+    <Content Include="App\views\attendances\report.html" />
+    <Content Include="App\views\coursedays\details.html" />
+    <Content Include="App\views\courseparts\details.html" />
+    <Content Include="App\views\courses\add.html" />
+    <Content Include="App\views\courses\delete.html" />
+    <Content Include="App\views\courses\details.html" />
+    <Content Include="App\views\courses\edit.html" />
+    <Content Include="App\views\courses\index.html" />
+    <Content Include="App\views\documents\upload.html" />
+    <Content Include="App\views\feedbacks\create.html" />
+    <Content Include="App\views\feedbacks\details.html" />
+    <Content Include="App\views\feedbacks\edit.html" />
+    <Content Include="App\views\internships\details.html" />
+    <Content Include="App\views\internships\edit.html" />
+    <Content Include="App\views\internships\index.html" />
+    <Content Include="App\views\login\login.html" />
+    <Content Include="App\views\login\redirectError.html" />
+    <Content Include="App\views\messages\history.html" />
+    <Content Include="App\views\messages\index.html" />
+    <Content Include="App\views\messages\read.html" />
+    <Content Include="App\views\messages\reply.html" />
+    <Content Include="App\views\messages\write.html" />
+    <Content Include="App\views\news\create.html" />
+    <Content Include="App\views\news\details.html" />
+    <Content Include="App\views\news\edit.html" />
+    <Content Include="App\views\news\index.html" />
+    <Content Include="App\views\studentsassignments\add.html" />
+    <Content Include="App\views\studentsassignments\delete.html" />
+    <Content Include="App\views\studentsassignments\details.html" />
+    <Content Include="App\views\studentsassignments\edit.html" />
+    <Content Include="App\views\studentsassignments\index.html" />
+    <Content Include="App\views\teachersassignments\add.html" />
+    <Content Include="App\views\teachersassignments\delete.html" />
+    <Content Include="App\views\teachersassignments\details.html" />
+    <Content Include="App\views\teachersassignments\edit.html" />
+    <Content Include="App\views\teachersassignments\index.html" />
+    <Content Include="App\views\templates\create.html" />
+    <Content Include="App\views\templates\details.html" />
+    <Content Include="App\views\templates\edit.html" />
+    <Content Include="App\views\templates\index.html" />
+    <Content Include="App\views\users\details.html" />
+    <Content Include="App\views\users\edit.html" />
+    <Content Include="App\views\users\index.html" />
+    <Content Include="App\views\users\register.html" />
     <Content Include="App_Data\Lexicon.mdf" />
     <Content Include="App_Data\Lexicon_log.ldf">
       <DependentUpon>Lexicon.mdf</DependentUpon>
@@ -460,8 +483,6 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <Content Include="Scripts\angular-animate.js" />
-    <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
@@ -528,6 +549,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708290911233_CoursePart.resx">
       <DependentUpon>201708290911233_CoursePart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709010759484_Links.resx">
+      <DependentUpon>201709010759484_Links.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

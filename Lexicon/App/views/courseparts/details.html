@@ -1,0 +1,159 @@
+﻿<h1>{{Title}}</h1>
+
+<hr />
+
+<h2>Code along/Lecture</h2>
+
+<div class="form-horizontal" ng-init="GetCoursePart()">
+    <div class="form-group">
+        <div class="col-md-10">
+            <textarea class="form-control content-message"
+                      name="CodeAlongLectures"
+                      ng-model="CoursePart.CodeAlong_Lecture"
+                      readonly></textarea>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<h2>Documents</h2>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <table class="table table-striped table-responsive vertical-centered">
+            <thead>
+                <tr>
+                    <th>
+                        <p class="p-sort" ng-click="orderDocumentsBy('Name')">
+                            Name
+                        </p>
+                    </th>
+                    <th>
+                        <p class="p-sort" ng-click="orderDocumentsBy('DocumentClass')">
+                            Document Class
+                        </p>
+                    </th>
+                    <th>
+                        <p class="p-sort" ng-click="orderDocumentsBy('UploadingDate')">
+                            Uploaded
+                        </p>
+                    </th>
+                    <th>
+                        <p class="p-sort" ng-click="orderDocumentsBy('UploadedBy')">
+                            By
+                        </p>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="doc in CoursePart.Files | orderBy:documentPropertyName:documentReverse">
+                    <td><a href="javascript:void(0)" data-localize="DOWNLOAD" ng-click="Download(doc.ID)">{{doc.Name}}</a></td>
+                    <td>{{doc.DocumentClass}}</td>
+                    <td>{{doc.Uploaded}}</td>
+                    <td>{{doc.UploadedBy}}</td>
+                    <td>
+                        <a href="javascript:void(0)" ng-click="DeleteDocument(doc.Name, doc.ID)">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="form-group">
+        <a class="btn btn-default" href="#!/CourseParts/Upload/{{CoursePart.ID}}">Upload a new document</a>
+    </div>
+</div>
+
+<hr />
+
+<h2>Pluralsight Links</h2>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <table class="table table-striped table-responsive vertical-centered">
+            <thead>
+                <tr>
+                    <th>
+                        <p class="p-sort" ng-click="orderLinksBy('HttpLink')">
+                            URL
+                        </p>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="link in CoursePart.Pluralsight | orderBy:linkPropertyName:linkReverse">
+                    <td>
+                        <a href="{{link.HttpLink}}">{{link.Name}}</a>
+                        <div id="framearea" class="pluralsight-link">
+                            <div id="framecover" style="position:absolute; z-index:2; height:100%; width:100%">
+                                <img src=""
+                                     onmousedown="this.oncontextmenu=new Function('return false')"
+                                     onmouseup="this.oncontextmenu=new Function('return false')">
+                            </div>
+                            <iframe id="mainframe"
+                                    scrolling="no"
+                                    src="{{link.HttpLink}}"
+                                    frameborder="0"></iframe>
+                        </div>
+                    </td>
+                    <td>
+                        <a href="#!/Links/Edit/{{link.ID}}">Edit</a> |
+                        <a href="javascript:void(0)" ng-click="DeleteLink(link.Name, link.ID)">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="form-group">
+        <a class="btn btn-default" href="#!/CourseParts/AddLink/{{CoursePart.ID}}">Add a new link</a>
+    </div>
+</div>
+
+<hr />
+
+<h2>Assignments</h2>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <table class="table table-striped table-responsive vertical-centered">
+            <thead>
+                <tr>
+                    <th>
+                        <p class="p-sort" ng-click="orderAssignmentsBy('Theme')">
+                            Theme
+                        </p>
+                    </th>
+                    <th>
+                        <p class="p-sort" ng-click="orderAssignmentsBy('Deadline')">
+                            Deadline
+                        </p>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="assignment in courseDay.Assignments | orderBy:assignmentPropertyName:assignmentReverse">
+                    <td>{{assignment.Theme}}</td>
+                    <td>{{assignment.Deadline}}</td>
+                    <td>
+                        <a href="#!/TeacherAssignments/Details/{{assignment.ID}}">Details</a> |
+                        <a href="#!/TeacherAssignments/Edit/{{assignment.ID}}">Edit</a> |
+                        <a href="javascript:void(0)" ng-click="DeleteAssignement(assignment.Theme, assignment.ID)">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="form-group">
+        <a class="btn btn-default" href="#!/CourseParts/AddAssignment/{{CoursePart.ID}}">Add a new assignment</a>
+    </div>
+
+    <div class="form-group">
+        <a href="#!/CourseParts/Edit/{{CoursePart.ID}}" class="btn btn-default">Edit</a> |
+        <a href="#!/CourseDays/Details/{{CoursePart.CourseDayID}}">Back to course day</a>
+    </div>
+</div>

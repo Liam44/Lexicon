@@ -282,8 +282,22 @@ textarea.content-message {
 
 .pluralsight-link {
     display: none;
-    width: 100%;
+    height: 500px;
+    width: 500px;
 }
+
+    .pluralsight-link img {
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+    .pluralsight-link iframe {
+        position: absolute;
+        z-index: 1;
+        height: 100%;
+        width: 100%;
+    }
 
     a:hover + .pluralsight-link, .pluralsight-link:hover {
         display: block;
@@ -291,7 +305,7 @@ textarea.content-message {
         z-index: 100;
     }
 
-/**//* DISPLAY MINIATURES ON PLURALSIGHT LINKS *//**/
+/**/ /* DISPLAY MINIATURES ON PLURALSIGHT LINKS */ /**/
 
 /* UPLOADING A FILE */
 .percent {
@@ -321,4 +335,4 @@ textarea.content-message {
     border-image: initial;
 }
 
-/**//* UPLOADING A FILE *//**/
+/**/ /* UPLOADING A FILE */ /**/

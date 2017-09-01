@@ -5,23 +5,7 @@ angular.module('courseparts')
        .factory('CoursePartsService', ['$http', 'tokenService', function ($http, tokenService) {
            var thisCoursePartService = {};
 
-           // get all course parts in a course day
-           thisCoursePartService.GetCourseParts = function (id) {
-               var promise = $http({
-                   method: 'GET',
-                   url: '/api/CourseParts/GetCourseParts/' + id,
-                   headers: tokenService.GetToken()
-               })
-                   .then(function (response) {
-                       return response.data;
-                   },
-                   function (response) {
-                       return response.data;
-                   });
-               return promise;
-           };
-
-           // get single record from database
+           // get a specific course part
            thisCoursePartService.GetSingle = function (id) {
                var promise = $http({
                    method: 'GET',
@@ -37,83 +21,43 @@ angular.module('courseparts')
                return promise;
            };
 
-           // post the data from database
-           thisCoursePartService.Edit = function (id, codeAlongLecture) {
-               var message = {
+           // put the data from database
+           thisCoursePartService.Edit = function (id, codeAlong_Lectures) {
+               var coursePart = {
                    ID: id,
-                   CodeAlong_Lecture: codeAlongLecture
+                   CodeAlong_Lecture: codeAlong_Lectures
                };
 
                var promise = $http({
                    method: 'PUT',
                    url: '/api/CourseParts/PutCoursePart/' + id,
-                   data: message,
+                   data: coursePart,
                    headers: tokenService.GetToken()
                })
-               .then(function (response) {
-                   return response.statusText;
-               },
-               function (response) {
-                   return response.statusText;
-               });
+                   .then(function (response) {
+                       return 'Course part updated!';
+                       // return response.statusText + ' ' + response.status + ' ' + response.data;
+                   },
+                   function (response) {
+                       return response.statusText + ' ' + response.status + ' ' + response.data;
+                   });
 
                return promise;
            };
 
-           // Creates a new div element, which contains message data
-           thisCoursePartService.CreateDiv = function (message, initialCoursePartId) {
-               var div = document.createElement('div');
-               var className = 'message message-content';
-
-               if (message.ID === initialCoursePartId) {
-                   className += ' message-selected';
+           thisCoursePartService.CreateTitle = function (cp) {
+               var title = '';
+               if (cp.CourseTemplateName !== undefined) {
+                   title += ' - \'' + cp.CourseTemplateName;
+               }
+               else if (cp.CourseName !== undefined) {
+                   title += ' - \'' + cp.CourseName;
                }
 
-               div.className = className;
-               div.id = message.ID;
-               div.style = 'padding-left:' + (message.Level * 50) + 'px';
+               title += '\' - ' + cp.CourseDayName + ' - ' + cp.PartDay;
 
-               var dateDiv = document.createElement('div');
-               dateDiv.className = 'col-md-3 message-date';
-               dateDiv.innerHTML = message.SendingDate;
-
-               if (message.Level > 0) {
-                   dateDiv.innerHTML = '\u2937' + '\u0009' + dateDiv.innerHTML;
-               }
-
-               var fromDiv = document.createElement('div');
-               fromDiv.className = 'col-md-3 message-from';
-               fromDiv.innerHTML = message.From;
-
-               var expendDiv = document.createElement('div');
-               expendDiv.className = 'message-subject';
-               expendDiv.innerHTML = message.Subject;
-
-               var collapseDiv = document.createElement('div');
-               collapseDiv.className = 'collapse';
-
-               var separator = Array(41).join('\u2014');
-
-               var reply = '';
-               if (message.FromID) {
-                   reply = '<a href="#!/CourseParts/Reply/' + message.ID + '">Reply</a>';
-               }
-
-               var content = [separator, message.Content, separator, reply, '', ''];
-
-               collapseDiv.innerHTML = content.join('<br />');
-
-               div.appendChild(dateDiv);
-               div.appendChild(fromDiv);
-               div.appendChild(expendDiv);
-               div.appendChild(collapseDiv);
-
-               div.addEventListener("click", function (e) {
-                   collapseDiv.classList.toggle('collapse');
-               });
-
-               return div;
-           }
+               return title;
+           };
 
            return thisCoursePartService;
        }]);

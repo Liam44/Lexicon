@@ -66,6 +66,8 @@ namespace SinglePageWebApplication.Controllers
                                          UploadedBy = f.Uploader.ToString(),
                                          DocumentClass = f.Class.ToString()
                                      }),
+                MorningID = courseDay.CourseParts.First().ID,
+                AfternoonID = courseDay.CourseParts.Last().ID
             };
         }
 

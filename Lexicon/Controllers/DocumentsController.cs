@@ -102,8 +102,6 @@ namespace SinglePageWebApplication.Controllers
                         ContentType = MimeMapping.GetMimeMapping(file.LocalFileName)
                     };
 
-                    fileInfo.Delete();
-
                     string strCourseId = provider.FormData["CourseID"];
 
                     if (strCourseId != null)
@@ -133,6 +131,8 @@ namespace SinglePageWebApplication.Controllers
                     }
 
                     document.Content = File.ReadAllBytes(file.LocalFileName);
+
+                    fileInfo.Delete();
 
                     await repository.Add(document);
                 }

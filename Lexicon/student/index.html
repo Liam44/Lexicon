@@ -7,10 +7,8 @@
 
     <link rel="stylesheet" href="/Content/bootstrap.min.css" />
     <link rel="stylesheet" href="/Content/Site.css" />
-    <link rel="import" href="/App/views/bundle-angular.html" />
-    <link rel="import" href="bundle-factories.html" />
-    <link rel="import" href="bundle-student.html" />
 
+    <link rel="import" href="/App/bundle-angular.html" />
 
     <!--    INCLUDING BUNDLES ONLY WORKS (SO FAR) ON CHROME !!!
     <script src="/Scripts/angular.js"></script>
@@ -18,10 +16,7 @@
     <script src="/App/scripts/modules/modules.js"></script>-->
 
 
-    <script src="/Scripts/jquery-3.1.1.min.js"></script>
-    <script src="/Scripts/bootstrap.min.js"></script>
-    <script src="/App/scripts/routing/Student.js"></script>
-
+    <link rel="import" href="bundle-student.html" />
 
     <!--<script src="/App/scripts/directives/bsActiveLink.js"></script>
     <script src="/App/scripts/controllers/student/ErrorController.js"></script>
@@ -34,14 +29,23 @@
     <script src="/App/scripts/controllers/student/news/Controller.js"></script>
     <script src="/App/scripts/controllers/student/news/CreateController.js"></script>
     <script src="/App/scripts/controllers/student/news/DetailsController.js"></script>
-    <script src="/App/scripts/controllers/student/news/EditController.js"></script>
-    <script src="/App/scripts/factories/CurrentUser.js"></script>
+    <script src="/App/scripts/controllers/student/news/EditController.js"></script>-->
+
+
+    <link rel="import" href="bundle-factories.html" />
+
+    <!--<script src="/App/scripts/factories/CurrentUser.js"></script>
     <script src="/App/scripts/factories/Messages.js"></script>
     <script src="/App/scripts/factories/News.js"></script>
     <script src="/App/scripts/factories/Password.js"></script>
     <script src="/App/scripts/factories/Redirect.js"></script>
     <script src="/App/scripts/factories/Token.js"></script>
     <script src="/App/scripts/factories/Users.js"></script>-->
+
+
+    <script src="/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/App/scripts/routing/Student.js"></script>
 </head>
 <body ng-app="student" ng-controller="Controller" ng-init="GetCurrentUser()">
     <div class="navbar navbar-inverse navbar-fixed-top">

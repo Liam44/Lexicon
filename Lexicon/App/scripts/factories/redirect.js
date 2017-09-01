@@ -6,8 +6,8 @@
                $window.location.href = role + '/';
            }
 
-           thisRedirectService.To = function (model, id) {
-               $window.location.href = '#!/' + model + '/Details/' + id;
+           thisRedirectService.To = function (controller, action, id) {
+               $window.location.href = '#!/' + controller + '/' + action + '/' + id;
            }
 
            thisRedirectService.Login = function () {

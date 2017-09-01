@@ -21,18 +21,13 @@ angular.module('teacher')
 
                 CourseDaysService.GetSingle($routeParams.id)
                     .then(function (cd) {
-                        if (cd.CourseTemplateName !== undefined) {
-                            $scope.Title += ' - \'' + cd.CourseTemplateName;
-                        }
-                        else if (cd.CourseName !== undefined) {
-                            $scope.Title += ' - \'' + cd.CourseName;
-                        }
-
-                        $scope.Title += '\' - DAY ' + cd.DayNumber;
+                        $scope.Title += CourseDaysService.CreateTitle(cd);
                     },
                     function (err) {
                         console.log("Error status: " + err.status);
                         $rootScope.loading = false;
+
+                        return;
                     });
 
                 DocumentsService.getDocumentClasses()
@@ -65,7 +60,7 @@ angular.module('teacher')
                         }
                     })
                         .then(function (response) {
-                            redirectService.To('CourseDays', $scope.CourseDayID);
+                            redirectService.To('CourseDays', 'Details', $scope.CourseDayID);
                         },
                         function (err) {
                             console.log("Error status: " + err.status);
